@@ -5,7 +5,7 @@ import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { Bell, Mail, ArrowRight, ArrowUpRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { SiteHeader } from "@/components/site-header"
+import { Navbar } from "@/components/navbar"
 import { SiteFooter } from "@/components/site-footer"
 
 function RevealSection({ children, className = "" }: { children: React.ReactNode, className?: string }) {
@@ -43,7 +43,7 @@ const breedingInfo = [
 export default function LittersPage() {
   return (
     <main className="min-h-screen overflow-x-hidden relative">
-      <SiteHeader />
+      <Navbar />
       
       {/* Hero Section */}
       <section className="relative pt-40 pb-32 px-6 bg-foreground text-background overflow-hidden">

@@ -17,7 +17,7 @@ const navigation = [
   { name: "Documents", href: "/documents" },
 ]
 
-export function SiteHeader() {
+export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const { scrollY } = useScroll()
@@ -34,7 +34,7 @@ export function SiteHeader() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
           ? "bg-background/95 backdrop-blur-xl border-b border-border shadow-sm" 
-          : "bg-transparent"
+          : "bg-background/95 backdrop-blur-xl lg:bg-transparent lg:backdrop-blur-none"
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
@@ -42,19 +42,19 @@ export function SiteHeader() {
           <motion.div 
             whileHover={{ scale: 1.05 }}
             className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-500 ${
-              isScrolled ? "bg-primary" : "bg-white/10 backdrop-blur-sm border border-white/20"
+              isScrolled ? "bg-primary" : "bg-primary lg:bg-white/10 lg:backdrop-blur-sm lg:border lg:border-white/20"
             }`}
           >
-            <Dog className={`w-6 h-6 transition-colors duration-500 ${isScrolled ? "text-primary-foreground" : "text-white"}`} />
+            <Dog className={`w-6 h-6 transition-colors duration-500 ${isScrolled ? "text-primary-foreground" : "text-primary-foreground lg:text-white"}`} />
           </motion.div>
           <div className="flex flex-col">
             <span className={`font-serif text-lg font-semibold leading-tight transition-colors duration-500 ${
-              isScrolled ? "text-foreground" : "text-white"
+              isScrolled ? "text-foreground" : "text-foreground lg:text-white"
             }`}>
               Bird Kennel
             </span>
             <span className={`text-xs transition-colors duration-500 ${
-              isScrolled ? "text-muted-foreground" : "text-white/60"
+              isScrolled ? "text-muted-foreground" : "text-muted-foreground lg:text-white/60"
             }`}>
               Ruffin, NC
             </span>
@@ -121,7 +121,7 @@ export function SiteHeader() {
 
         <button
           type="button"
-          className={`lg:hidden p-2 -m-2 transition-colors ${isScrolled ? "text-foreground" : "text-white"}`}
+          className="lg:hidden p-2 -m-2 transition-colors text-foreground"
           onClick={() => setMobileMenuOpen(true)}
           data-cursor-hover
         >

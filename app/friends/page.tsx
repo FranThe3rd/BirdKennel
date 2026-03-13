@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { useRef } from "react"
 import { Heart, Dog, Home, Users, ArrowRight, FileText, Instagram, Facebook, ArrowUpRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { SiteHeader } from "@/components/site-header"
+import { Navbar } from "@/components/navbar"
 import { SiteFooter } from "@/components/site-footer"
 
 function RevealSection({ children, className = "" }: { children: React.ReactNode, className?: string }) {
@@ -78,7 +78,7 @@ export default function FriendsPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden relative">
-      <SiteHeader />
+      <Navbar />
       
       {/* Cinematic Hero */}
       <section ref={heroRef} className="relative h-screen min-h-[700px] flex items-center overflow-hidden">

@@ -5,7 +5,7 @@ import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { Calendar, Bell, Mail, ArrowRight, ArrowUpRight, Sparkles, Users, Gift } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { SiteHeader } from "@/components/site-header"
+import { Navbar } from "@/components/navbar"
 import { SiteFooter } from "@/components/site-footer"
 
 function RevealSection({ children, className = "" }: { children: React.ReactNode, className?: string }) {
@@ -46,7 +46,7 @@ const eventTypes = [
 export default function EventsPage() {
   return (
     <main className="min-h-screen overflow-x-hidden relative">
-      <SiteHeader />
+      <Navbar />
       
       {/* Hero Section */}
       <section className="relative pt-40 pb-32 px-6 bg-foreground text-background overflow-hidden">

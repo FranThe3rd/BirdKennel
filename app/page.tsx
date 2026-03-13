@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform, useSpring, useInView } from "framer-mo
 import { useRef } from "react"
 import { ArrowRight, Heart, Users, Home as HomeIcon, Dog, ChevronDown, Play, ArrowUpRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { SiteHeader } from "@/components/site-header"
+import { Navbar } from "@/components/navbar"
 import { SiteFooter } from "@/components/site-footer"
 
 const team = [
@@ -148,7 +148,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden relative">
-      <SiteHeader />
+      <Navbar />
       
       {/* Hero Section - Full Screen Cinematic */}
       <section ref={heroRef} className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
