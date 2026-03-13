@@ -458,7 +458,7 @@ export default function HomePage() {
               Every adoption saves a life. Browse our available hounds or contact us to learn more about how you can help.
             </p>
             <div className="flex flex-col sm:flex-row gap-5 justify-center">
-              <MagneticButton href="/available" className="bg-white text-primary hover:bg-white/90 shadow-xl shadow-black/20">
+              <MagneticButton href="/available" variant="outline" className="text-white border-white/30 hover:bg-white hover:text-primary">
                 View Available Hounds
                 <ArrowRight className="w-4 h-4" />
               </MagneticButton>
