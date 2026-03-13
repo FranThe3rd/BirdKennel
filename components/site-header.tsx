@@ -19,9 +19,11 @@ const navigation = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
+    setMounted(true)
+    const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener("scroll", onScroll)
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
@@ -35,18 +37,21 @@ export function SiteHeader() {
           position: fixed;
           top: 0; left: 0; right: 0;
           z-index: 50;
-          transition: box-shadow 0.4s ease;
-          background: #fff;
-          
+          transition: background 0.5s ease, box-shadow 0.5s ease, backdrop-filter 0.5s ease;
+          background: transparent;
         }
 
         .hdr.scrolled {
+          background: rgba(255,255,255,0.97);
+          backdrop-filter: blur(12px);
           box-shadow: 0 1px 0 #e5e7eb, 0 4px 24px rgba(0,0,0,0.06);
         }
 
         .hdr-rule {
           height: 2px;
-          background: linear-gradient(90deg, transparent, #dc2626 25%, #aaa 50%, #dc2626 75%, transparent);        }
+          background: linear-gradient(90deg, transparent, #dc2626 25%, #aaa 50%, #dc2626 75%, transparent);
+          transform-origin: left;
+        }
 
         .hdr-inner {
           max-width: 80rem;
@@ -59,7 +64,12 @@ export function SiteHeader() {
           align-items: center;
           justify-content: space-between;
           padding: 0.7rem 0 0.55rem;
-          border-bottom: 1px solid #e5e7eb;
+          border-bottom: 1px solid rgba(229,231,235,0.6);
+          transition: border-color 0.5s ease;
+        }
+
+        .hdr.scrolled .hdr-top {
+          border-color: #e5e7eb;
         }
 
         .hdr-logo {
@@ -76,9 +86,7 @@ export function SiteHeader() {
           border-radius: 50%;
           border: 1.5px solid #111111;
           background: #ffffff;
-          box-shadow:
-            inset 0 0 0 3px #ffffff,
-            inset 0 0 0 4px #cccccc;
+          box-shadow: inset 0 0 0 3px #ffffff, inset 0 0 0 4px #cccccc;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -107,8 +115,8 @@ export function SiteHeader() {
           font-size: 1rem;
           font-weight: 500;
           letter-spacing: 0.1em;
-          color: red;       
-         }
+          color: red;
+        }
 
         .hdr-sub {
           font-family: 'Cormorant Garamond', serif;
@@ -145,6 +153,7 @@ export function SiteHeader() {
         .hdr-cta:hover {
           background: red;
           color: white;
+          border-color: red;
         }
 
         .hdr-toggle {
@@ -173,7 +182,6 @@ export function SiteHeader() {
           position: relative;
           transition: color 0.2s ease;
           white-space: nowrap;
-          
         }
 
         .hdr-link::after {
@@ -184,17 +192,12 @@ export function SiteHeader() {
           transform: translateX(-50%);
           width: 0;
           height: 1px;
-          background: #111111;
+          background: #dc2626;
           transition: width 0.28s ease;
         }
 
-        .hdr-link:hover {
-          color: red;
-        }
-
-        .hdr-link:hover::after {
-          width: 55%;
-        }
+        .hdr-link:hover { color: red; }
+        .hdr-link:hover::after { width: 55%; }
 
         .hdr-sep {
           color: #bbbbbb;
@@ -234,20 +237,14 @@ export function SiteHeader() {
           content: '—';
           font-style: normal;
           font-size: 0.65rem;
-          color: #111111;
+          color: #dc2626;
           opacity: 0;
           transition: opacity 0.2s ease;
           flex-shrink: 0;
         }
 
-        .hdr-mobile-link:hover {
-          color: #111111;
-          padding-left: 0.4rem;
-        }
-
-        .hdr-mobile-link:hover::before {
-          opacity: 1;
-        }
+        .hdr-mobile-link:hover { color: #111111; padding-left: 0.4rem; }
+        .hdr-mobile-link:hover::before { opacity: 1; }
 
         .hdr-mobile-cta {
           margin-top: 1.5rem;
@@ -266,10 +263,7 @@ export function SiteHeader() {
           display: block;
         }
 
-        .hdr-mobile-cta:hover {
-          background: #111111;
-          color: #ffffff;
-        }
+        .hdr-mobile-cta:hover { background: #111111; color: #ffffff; }
 
         @media (max-width: 900px) {
           .hdr-nav, .hdr-ornament, .hdr-cta { display: none; }
@@ -279,39 +273,87 @@ export function SiteHeader() {
         @media (min-width: 901px) {
           .hdr-mobile { display: none !important; }
         }
+
+        /* when transparent (not scrolled) */
+.hdr:not(.scrolled) .hdr-link { color: rgba(255,255,255,0.8); }
+.hdr:not(.scrolled) .hdr-link:hover { color: #fff; }
+.hdr:not(.scrolled) .hdr-name { color: #fff; }
+.hdr:not(.scrolled) .hdr-sub { color: rgba(255,255,255,0.6); }
+.hdr:not(.scrolled) .hdr-ornament { color: rgba(255,255,255,0.4); }
+.hdr:not(.scrolled) .hdr-cta { color: #fff; border-color: rgba(255,255,255,0.6); }
+.hdr:not(.scrolled) .hdr-toggle { color: #fff; }
+.hdr:not(.scrolled) .hdr-sep { color: rgba(255,255,255,0.3); }
+.hdr:not(.scrolled) .hdr-top { border-color: rgba(255,255,255,0.15); }
+.hdr:not(.scrolled) .hdr-badge { border-color: rgba(255,255,255,0.7); background: transparent; }
+.hdr:not(.scrolled) .hdr-badge svg { color: #fff; }
+
+
+
       `}</style>
 
-      <header className={`hdr${scrolled ? " scrolled" : ""}`}>
-        <div className="hdr-rule" />
+      <motion.header
+        className={`hdr${scrolled ? " scrolled" : ""}`}
+        initial={{ y: -80, opacity: 0 }}
+        animate={mounted ? { y: 0, opacity: 1 } : {}}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {/* Top rule — animates width on mount */}
+        <motion.div
+          className="hdr-rule"
+          initial={{ scaleX: 0 }}
+          animate={mounted ? { scaleX: 1 } : {}}
+          transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          style={{ transformOrigin: "left" }}
+        />
 
         <div className="hdr-inner">
 
           {/* TOP ROW */}
           <div className="hdr-top">
 
-            <Link href="/" className="hdr-logo">
-              <div className="hdr-badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2 .336-3.5 2.5-3.5 4.5C3 9 4 10 4 10H3v2h.5L5 21h3l1-5h2l1 5h3l.5-8.5c.5-.5 1.5-1.5 1.5-3s-1-2.5-1-2.5L16 6l-1.5-1-1 1.5L12 5l-2 .172Z"/>
-                </svg>
-              </div>
-              <div className="hdr-wordmark">
-                <span className="hdr-name">Bird Kennel</span>
-                <span className="hdr-sub">Ruffin, NC</span>
-              </div>
-            </Link>
-
-            <span className="hdr-ornament" aria-hidden>❧ ❧ ❧</span>
-
-            <Link href="/friends#donate" className="hdr-cta">Donate</Link>
-
-            <button
-              className="hdr-toggle"
-              onClick={() => setOpen(!open)}
-              aria-label="Toggle navigation"
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={mounted ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.35 }}
             >
-              {open ? <X size={24} /> : <Menu size={24} />}
-            </button>
+              <Link href="/" className="hdr-logo">
+                <div className="hdr-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2 .336-3.5 2.5-3.5 4.5C3 9 4 10 4 10H3v2h.5L5 21h3l1-5h2l1 5h3l.5-8.5c.5-.5 1.5-1.5 1.5-3s-1-2.5-1-2.5L16 6l-1.5-1-1 1.5L12 5l-2 .172Z"/>
+                  </svg>
+                </div>
+                <div className="hdr-wordmark">
+                  <span className="hdr-name">Bird Kennel</span>
+                  <span className="hdr-sub">Ruffin, NC</span>
+                </div>
+              </Link>
+            </motion.div>
+
+            <motion.span
+              className="hdr-ornament"
+              aria-hidden
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={mounted ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              ❧ ❧ ❧
+            </motion.span>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={mounted ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}
+            >
+              <Link href="/friends#donate" className="hdr-cta">Donate</Link>
+              <button
+                className="hdr-toggle"
+                onClick={() => setOpen(!open)}
+                aria-label="Toggle navigation"
+              >
+                {open ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </motion.div>
 
           </div>
 
@@ -319,9 +361,22 @@ export function SiteHeader() {
           <nav className="hdr-nav" aria-label="Main navigation">
             {navigation.map((item, i) => (
               <span key={item.name} style={{ display: "contents" }}>
-                <Link href={item.href} className="hdr-link">{item.name}</Link>
+                <motion.div
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={mounted ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.45 + i * 0.05 }}
+                  style={{ display: "contents" }}
+                >
+                  <Link href={item.href} className="hdr-link">{item.name}</Link>
+                </motion.div>
                 {i < navigation.length - 1 && (
-                  <span className="hdr-sep" aria-hidden>●</span>
+                  <motion.span
+                    className="hdr-sep"
+                    aria-hidden
+                    initial={{ opacity: 0 }}
+                    animate={mounted ? { opacity: 1 } : {}}
+                    transition={{ duration: 0.3, delay: 0.5 + i * 0.05 }}
+                  >●</motion.span>
                 )}
               </span>
             ))}
@@ -347,25 +402,13 @@ export function SiteHeader() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.04, duration: 0.22 }}
                   >
-                    <Link
-                      href={item.href}
-                      className="hdr-mobile-link"
-                      onClick={() => setOpen(false)}
-                    >
+                    <Link href={item.href} className="hdr-mobile-link" onClick={() => setOpen(false)}>
                       {item.name}
                     </Link>
                   </motion.div>
                 ))}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.36 }}
-                >
-                  <Link
-                    href="/friends#donate"
-                    className="hdr-mobile-cta"
-                    onClick={() => setOpen(false)}
-                  >
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.36 }}>
+                  <Link href="/friends#donate" className="hdr-mobile-cta" onClick={() => setOpen(false)}>
                     Donate
                   </Link>
                 </motion.div>
@@ -374,7 +417,7 @@ export function SiteHeader() {
           )}
         </AnimatePresence>
 
-      </header>
+      </motion.header>
     </>
   )
 }
