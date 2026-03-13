@@ -1,24 +1,28 @@
 "use client"
 
 import Link from "next/link"
-import { motion } from "framer-motion"
-import { FileText, Download, ArrowRight, ClipboardList, BookOpen, HelpCircle, FileCheck, Undo2 } from "lucide-react"
+import { motion, useInView } from "framer-motion"
+import { useRef } from "react"
+import { FileText, Download, ArrowRight, ClipboardList, BookOpen, HelpCircle, FileCheck, Undo2, ArrowUpRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: "easeOut" }
-}
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
+function RevealSection({ children, className = "" }: { children: React.ReactNode, className?: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
 }
 
 const documents = [
@@ -56,115 +60,129 @@ const documents = [
 
 export default function DocumentsPage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen overflow-x-hidden">
       <SiteHeader />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6 bg-secondary">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+      <section className="relative pt-40 pb-32 px-6 bg-foreground text-background overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==')]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-background/5" />
+        
+        <div className="max-w-4xl mx-auto text-center relative">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto"
+            className="inline-flex items-center gap-2 text-primary font-medium text-sm tracking-[0.2em] uppercase mb-6"
           >
-            <span className="text-primary font-medium text-sm tracking-wider uppercase">Resources</span>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mt-4 mb-6 text-balance">
-              Documents
-            </h1>
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              Download important forms and documents for the adoption process, as well as helpful resources for foxhound care.
-            </p>
-          </motion.div>
+            <Sparkles className="w-4 h-4" />
+            Resources
+          </motion.span>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-background mb-6"
+          >
+            Forms & <span className="italic text-primary">Documents</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-background/70 text-lg max-w-2xl mx-auto leading-relaxed"
+          >
+            Download important forms and documents for the adoption process, as well as helpful resources for foxhound care.
+          </motion.p>
         </div>
       </section>
 
-      {/* Documents Grid */}
-      <section className="py-20 px-6">
+      {/* Documents List */}
+      <section className="py-24 px-6 bg-background">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-100px" }}
-            className="space-y-4"
-          >
+          <div className="space-y-4">
             {documents.map((doc, index) => (
-              <motion.div
-                key={doc.title}
-                variants={fadeInUp}
-                className="bg-card rounded-xl border border-border p-6 hover:border-primary transition-colors group"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
-                    <doc.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{doc.category}</span>
-                        <h3 className="font-serif text-lg font-semibold text-foreground mt-1">{doc.title}</h3>
-                        <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{doc.description}</p>
+              <RevealSection key={doc.title}>
+                <motion.div
+                  whileHover={{ x: 8, backgroundColor: "hsl(var(--secondary))" }}
+                  className="bg-card rounded-2xl border border-border p-8 transition-all group"
+                  data-cursor-hover
+                >
+                  <div className="flex items-start gap-6">
+                    <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <doc.icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                        <div>
+                          <span className="inline-block text-xs font-semibold text-primary uppercase tracking-wider mb-2 px-3 py-1 bg-primary/10 rounded-full">{doc.category}</span>
+                          <h3 className="font-serif text-xl font-semibold text-foreground mt-2">{doc.title}</h3>
+                          <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{doc.description}</p>
+                        </div>
+                        <Button variant="outline" className="shrink-0 rounded-full group/btn" data-cursor-hover>
+                          <Download className="w-4 h-4 mr-2 transition-transform group-hover/btn:-translate-y-1" />
+                          Download
+                        </Button>
                       </div>
-                      <Button variant="outline" size="sm" className="shrink-0">
-                        <Download className="w-4 h-4 mr-2" />
-                        Download
-                      </Button>
                     </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </RevealSection>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Help Section */}
-      <section className="py-20 px-6 bg-secondary">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-24 px-6 bg-secondary/50">
+        <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bg-card p-8 rounded-2xl border border-border"
-            >
-              <FileText className="w-10 h-10 text-primary mb-4" />
-              <h3 className="font-serif text-xl font-semibold text-foreground mb-3">
-                Need Help With Forms?
-              </h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                If you have any questions about the adoption forms or need assistance filling them out, don&apos;t hesitate to reach out.
-              </p>
-              <Button asChild variant="outline">
-                <a href="mailto:BirdKennels@gmail.com">
-                  Contact Us
-                </a>
-              </Button>
-            </motion.div>
+            <RevealSection>
+              <motion.div
+                whileHover={{ y: -8 }}
+                className="bg-card p-10 rounded-2xl border border-border shadow-lg h-full"
+                data-cursor-hover
+              >
+                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                  <FileText className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="font-serif text-2xl font-semibold text-foreground mb-4">
+                  Need Help With Forms?
+                </h3>
+                <p className="text-muted-foreground mb-8 leading-relaxed">
+                  If you have any questions about the adoption forms or need assistance filling them out, don&apos;t hesitate to reach out.
+                </p>
+                <Button asChild variant="outline" className="rounded-full">
+                  <a href="mailto:BirdKennels@gmail.com" data-cursor-hover>
+                    Contact Us
+                  </a>
+                </Button>
+              </motion.div>
+            </RevealSection>
 
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bg-card p-8 rounded-2xl border border-border"
-            >
-              <ClipboardList className="w-10 h-10 text-primary mb-4" />
-              <h3 className="font-serif text-xl font-semibold text-foreground mb-3">
-                Ready to Adopt?
-              </h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                Once you&apos;ve reviewed the documents and filled out the forms, check out our available hounds to find your perfect match.
-              </p>
-              <Button asChild>
-                <Link href="/available">
-                  View Available Hounds
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </motion.div>
+            <RevealSection>
+              <motion.div
+                whileHover={{ y: -8 }}
+                className="bg-primary text-primary-foreground p-10 rounded-2xl shadow-lg h-full"
+                data-cursor-hover
+              >
+                <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center mb-6">
+                  <ClipboardList className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="font-serif text-2xl font-semibold text-white mb-4">
+                  Ready to Adopt?
+                </h3>
+                <p className="text-white/80 mb-8 leading-relaxed">
+                  Once you&apos;ve reviewed the documents and filled out the forms, check out our available hounds to find your perfect match.
+                </p>
+                <Button asChild className="bg-white text-primary hover:bg-white/90 rounded-full group">
+                  <Link href="/available" data-cursor-hover>
+                    View Available Hounds
+                    <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </Link>
+                </Button>
+              </motion.div>
+            </RevealSection>
           </div>
         </div>
       </section>
