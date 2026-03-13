@@ -83,7 +83,7 @@ export default function AvailablePage() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
 
   return (
-    <main className="min-h-screen overflow-x-hidden">
+    <main className="min-h-screen overflow-x-hidden relative">
       <SiteHeader />
       
       {/* Cinematic Hero */}

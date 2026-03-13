@@ -42,7 +42,7 @@ const breedingInfo = [
 
 export default function LittersPage() {
   return (
-    <main className="min-h-screen overflow-x-hidden">
+    <main className="min-h-screen overflow-x-hidden relative">
       <SiteHeader />
       
       {/* Hero Section */}

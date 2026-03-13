@@ -45,7 +45,7 @@ const eventTypes = [
 
 export default function EventsPage() {
   return (
-    <main className="min-h-screen overflow-x-hidden">
+    <main className="min-h-screen overflow-x-hidden relative">
       <SiteHeader />
       
       {/* Hero Section */}
