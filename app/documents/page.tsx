@@ -60,7 +60,7 @@ const documents = [
 
 export default function DocumentsPage() {
   return (
-    <main className="min-h-screen overflow-x-hidden">
+    <main className="min-h-screen overflow-x-hidden relative">
       <SiteHeader />
       
       {/* Hero Section */}

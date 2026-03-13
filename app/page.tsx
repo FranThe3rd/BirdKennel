@@ -110,8 +110,8 @@ function ParallaxImage({ src, alt, className = "" }: { src: string, alt: string,
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"])
   
   return (
-    <div ref={ref} className={`overflow-hidden ${className}`}>
-      <motion.div style={{ y }} className="h-[120%] w-full -mt-[10%]">
+    <div ref={ref} className={`overflow-hidden relative ${className}`}>
+      <motion.div style={{ y }} className="h-[120%] w-full -mt-[10%] relative">
         <Image src={src} alt={alt} fill className="object-cover" />
       </motion.div>
     </div>
@@ -147,7 +147,7 @@ export default function HomePage() {
   const heroTextY = useTransform(scrollYProgress, [0, 1], [0, 200])
 
   return (
-    <main className="min-h-screen overflow-x-hidden">
+    <main className="min-h-screen overflow-x-hidden relative">
       <SiteHeader />
       
       {/* Hero Section - Full Screen Cinematic */}
