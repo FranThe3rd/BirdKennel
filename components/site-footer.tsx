@@ -190,26 +190,8 @@ export function SiteFooter() {
           className="mt-16 pt-10 border-t border-background/10"
         >
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-            <div>
-              <h3 className="font-serif text-2xl font-semibold text-background mb-2">Stay Updated</h3>
-              <p className="text-background/60 text-sm">Subscribe to our newsletter for news and updates.</p>
-            </div>
-            <form className="flex gap-3 w-full lg:w-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="px-5 py-3 bg-background/5 border border-background/10 rounded-full text-background placeholder:text-background/40 text-sm flex-1 lg:w-72 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                data-cursor-hover
-              />
-              <Button 
-                type="submit" 
-                className="rounded-full px-6"
-                data-cursor-hover
-              >
-                Subscribe
-                <ArrowUpRight className="w-4 h-4 ml-1" />
-              </Button>
-            </form>
+
+
           </div>
         </motion.div>
 

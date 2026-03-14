@@ -195,30 +195,7 @@ export default function EventsPage() {
                 We don&apos;t have any events scheduled right now, but we&apos;re always planning something special! Subscribe to be notified when we set up events.
               </p>
 
-              <div className="bg-card border border-border rounded-2xl p-10 mb-10 shadow-lg">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <Bell className="w-5 h-5 text-primary" />
-                  <h3 className="font-serif text-2xl font-semibold text-foreground">
-                    Get Event Notifications
-                  </h3>
-                </div>
-                <p className="text-muted-foreground mb-8">
-                  Be the first to know about upcoming events, adoption days, and fundraisers.
-                </p>
-                <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                  <div className="relative flex-1">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <input
-                      type="email"
-                      placeholder="Enter your email"
-                      className="w-full pl-12 pr-4 py-4 bg-background border border-input rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                    />
-                  </div>
-                  <Button type="submit" className="rounded-full px-6">
-                    Subscribe
-                  </Button>
-                </form>
-              </div>
+
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild variant="outline" size="lg" className="rounded-full group">
