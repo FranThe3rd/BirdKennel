@@ -32,8 +32,8 @@ const adoptedHounds = [
   {
     name: "Tutter",
     images: [
-      "/images/hound-tutter.jpg",
-      "/images/hound-tutter2.jpg"
+      "/images/adopted/hound-tutter.jpg",
+      "/images/adopted/hound-tutter2.jpg"
     ],
     adoptedDate: "January 10, 2026",
     description:
