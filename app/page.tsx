@@ -58,19 +58,19 @@ const team = [
     name: "Andrew Bird",
     role: "President",
     image: "/images/team-andrew.jpg",
-    description: "Andrew has been dedicated to the field since 2023, passionately working to preserve the rich tradition of North Carolina houndsmen."
+    description: "Andrew has been dedicated to the field since 2023, passionately working to preserve the rich tradition of North Carolina houndsmen. With a deep love for American foxhounds, he is committed to ensuring that this cherished heritage continues for future generations. Andrew believes in the importance of maintaining the unique bond between hounds and their handlers, fostering a community that respects and celebrates this-honored practice."
   },
   {
     name: "Hanna Bird",
     role: "Vice President",
     image: "/images/team-hanna.jpg",
-    description: "Hanna has been a steadfast supporter of the kennel from the start. She ensures every hound is treated with the care of a cherished family member."
+    description: "Hanna has been a steadfast supporter of the kennel from the start. She has a deep love for our foxhounds and makes certain that every hound is treated with the same care and affection as a cherished family member. Hanna helps maintain the kennel, promote the events and newsletters, and creates merchandise."
   },
   {
     name: "Angel Crowder",
     role: "Caretaker & Trainer",
     image: "/images/team-angel.jpg",
-    description: "Angel has been a huge part of the kennel since early 2025. She maintains the kennel, trains hounds, and captures their stories through photography."
+    description: "Angel has been a huge part of the kennel since early 2025. She has spent countless hours maintaining the kennel, feeding the hounds and being a friend to the countless hounds that come and go from our organization. She is dedicated to assisting in the wellbeing and care of so many Foxhounds. She also assists in training hounds, and she takes a lot of photos to help promote the kennel and the hounds that reside within it. "
   }
 ]
 
