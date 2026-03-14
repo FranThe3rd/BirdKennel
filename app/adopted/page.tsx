@@ -43,8 +43,8 @@ const adoptedHounds = [
 
 
 const stats = [
-  { value: "30+", label: "Hounds Rescued" },
-  { value: "25+", label: "Forever Homes" },
+  { value: "10+", label: "Hounds Rescued" },
+  { value: "5+", label: "Forever Homes" },
   { value: "100%", label: "Love Given" }
 ]
 
