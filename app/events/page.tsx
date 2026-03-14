@@ -1,17 +1,35 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { Calendar, Bell, Mail, ArrowRight, ArrowUpRight, Sparkles, Users, Gift } from "lucide-react"
+import { Calendar, Bell, Mail, ArrowRight, ArrowUpRight, Sparkles, Users, Gift, MapPin, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 
+// ─── ADD NEW EVENTS HERE ──────────────────────────────────────────────────────
+// To add a new event, copy one object and paste it into the array below.
+// Set image to null if you don't have one yet — a placeholder will show instead.
+const events = [
+  /*
+  {
+    title: "Spring Adoption Day",
+    date: "April 19, 2025",
+    time: "10:00 AM – 3:00 PM",
+    location: "Bird Kennel, Ruffin, NC",
+    description: "Come meet our available hounds in person! This is a great opportunity to find your perfect foxhound companion. We'll have hounds of all ages available for adoption, and our team will be on hand to answer any questions about the breed and the adoption process.",
+    category: "Adoption Day",
+    image: "/images/events/spring-adoption.jpg", // set to null if no image
+  },
+  */
+]
+// ─────────────────────────────────────────────────────────────────────────────
+
 function RevealSection({ children, className = "" }: { children: React.ReactNode, className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  
   return (
     <motion.div
       ref={ref}
@@ -44,15 +62,17 @@ const eventTypes = [
 ]
 
 export default function EventsPage() {
+  const hasEvents = events.length > 0
+
   return (
     <main className="min-h-screen overflow-x-hidden relative">
       <SiteHeader />
-      
+
       {/* Hero Section */}
       <section className="relative pt-40 pb-32 px-6 bg-foreground text-background overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==')]" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-background/5" />
-        
+
         <div className="max-w-4xl mx-auto text-center relative">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -82,65 +102,139 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* No Events Message */}
-      <section className="py-32 px-6 bg-background">
-        <div className="max-w-2xl mx-auto text-center">
-          <RevealSection>
-            <motion.div
-              whileHover={{ scale: 1.05, rotate: 5 }}
-              className="w-24 h-24 bg-secondary rounded-full flex items-center justify-center mx-auto mb-10"
-            >
-              <Calendar className="w-12 h-12 text-primary" />
-            </motion.div>
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
-              No Events <span className="italic text-primary">Scheduled</span>
-            </h2>
-            <p className="text-muted-foreground text-lg mb-12 leading-relaxed">
-              We don&apos;t have any events scheduled right now, but we&apos;re always planning something special! Subscribe to be notified when we set up events.
-            </p>
-            
-            <div className="bg-card border border-border rounded-2xl p-10 mb-10 shadow-lg">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <Bell className="w-5 h-5 text-primary" />
-                <h3 className="font-serif text-2xl font-semibold text-foreground">
-                  Get Event Notifications
-                </h3>
-              </div>
-              <p className="text-muted-foreground mb-8">
-                Be the first to know about upcoming events, adoption days, and fundraisers.
-              </p>
-              <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <div className="relative flex-1">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="w-full pl-12 pr-4 py-4 bg-background border border-input rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                    data-cursor-hover
-                  />
-                </div>
-                <Button type="submit" className="rounded-full px-6" data-cursor-hover>
-                  Subscribe
-                </Button>
-              </form>
-            </div>
+      {/* Events List OR No Events Message */}
+      {hasEvents ? (
+        <section className="py-24 px-6 bg-background">
+          <div className="max-w-5xl mx-auto space-y-10">
+            {events.map((event, index) => (
+              <RevealSection key={index}>
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                  className="bg-card rounded-2xl border border-border overflow-hidden shadow-lg group"
+                >
+                  <div className="grid md:grid-cols-2">
+                    {/* Image */}
+                    <div className="relative aspect-[4/3] md:aspect-auto md:min-h-[320px] bg-secondary overflow-hidden">
+                      {event.image ? (
+                        <Image
+                          src={event.image}
+                          alt={event.title}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-secondary">
+                          <Calendar className="w-16 h-16 text-primary/30" />
+                          <span className="text-muted-foreground text-sm font-medium tracking-wide uppercase">Event Photo Coming Soon</span>
+                        </div>
+                      )}
+                      {/* Category badge */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <span className="inline-block text-xs font-semibold text-primary uppercase tracking-wider px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full shadow">
+                          {event.category}
+                        </span>
+                      </div>
+                    </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild variant="outline" size="lg" className="rounded-full group">
-                <Link href="/friends" data-cursor-hover>
-                  Learn About Our Mission
-                  <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full">
-                <a href="mailto:BirdKennels@gmail.com" data-cursor-hover>
-                  Contact Us
-                </a>
-              </Button>
-            </div>
-          </RevealSection>
-        </div>
-      </section>
+                    {/* Content */}
+                    <div className="p-8 md:p-10 flex flex-col justify-center">
+                      <h2 className="font-serif text-3xl font-bold text-foreground mb-5">{event.title}</h2>
+
+                      <div className="space-y-2.5 mb-6">
+                        <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                          <Calendar className="w-4 h-4 text-primary shrink-0" />
+                          <span>{event.date}</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                          <Clock className="w-4 h-4 text-primary shrink-0" />
+                          <span>{event.time}</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                          <MapPin className="w-4 h-4 text-primary shrink-0" />
+                          <span>{event.location}</span>
+                        </div>
+                      </div>
+
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-8">
+                        {event.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-3">
+                        <Button asChild size="lg" className="rounded-full group/btn">
+                          <Link href="/available">
+                            View Available Hounds
+                            <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                          </Link>
+                        </Button>
+                        <Button asChild variant="outline" size="lg" className="rounded-full">
+                          <a href="mailto:BirdKennels@gmail.com">RSVP / Contact</a>
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </RevealSection>
+            ))}
+          </div>
+        </section>
+      ) : (
+        <section className="py-32 px-6 bg-background">
+          <div className="max-w-2xl mx-auto text-center">
+            <RevealSection>
+              <motion.div
+                whileHover={{ scale: 1.05, rotate: 5 }}
+                className="w-24 h-24 bg-secondary rounded-full flex items-center justify-center mx-auto mb-10"
+              >
+                <Calendar className="w-12 h-12 text-primary" />
+              </motion.div>
+              <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
+                No Events <span className="italic text-primary">Scheduled</span>
+              </h2>
+              <p className="text-muted-foreground text-lg mb-12 leading-relaxed">
+                We don&apos;t have any events scheduled right now, but we&apos;re always planning something special! Subscribe to be notified when we set up events.
+              </p>
+
+              <div className="bg-card border border-border rounded-2xl p-10 mb-10 shadow-lg">
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <Bell className="w-5 h-5 text-primary" />
+                  <h3 className="font-serif text-2xl font-semibold text-foreground">
+                    Get Event Notifications
+                  </h3>
+                </div>
+                <p className="text-muted-foreground mb-8">
+                  Be the first to know about upcoming events, adoption days, and fundraisers.
+                </p>
+                <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                  <div className="relative flex-1">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      className="w-full pl-12 pr-4 py-4 bg-background border border-input rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                    />
+                  </div>
+                  <Button type="submit" className="rounded-full px-6">
+                    Subscribe
+                  </Button>
+                </form>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button asChild variant="outline" size="lg" className="rounded-full group">
+                  <Link href="/friends">
+                    Learn About Our Mission
+                    <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="rounded-full">
+                  <a href="mailto:BirdKennels@gmail.com">Contact Us</a>
+                </Button>
+              </div>
+            </RevealSection>
+          </div>
+        </section>
+      )}
 
       {/* Event Types Section */}
       <section className="py-24 px-6 bg-secondary/50">
@@ -158,12 +252,11 @@ export default function EventsPage() {
           </RevealSection>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {eventTypes.map((item, index) => (
+            {eventTypes.map((item) => (
               <RevealSection key={item.title}>
                 <motion.div
                   whileHover={{ y: -8 }}
                   className="bg-card p-8 rounded-2xl border border-border shadow-lg text-center h-full"
-                  data-cursor-hover
                 >
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                     <item.icon className="w-8 h-8 text-primary" />
