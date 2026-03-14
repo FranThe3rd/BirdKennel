@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { FileText, Download, ArrowRight, ClipboardList, BookOpen, HelpCircle, FileCheck, Undo2, ArrowUpRight, Sparkles } from "lucide-react"
+import { FileText, Download, ArrowUpRight, ClipboardList, BookOpen, HelpCircle, FileCheck, Undo2, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
@@ -27,35 +27,40 @@ function RevealSection({ children, className = "" }: { children: React.ReactNode
 
 const documents = [
   {
-    title: "Foxhound Adoption Form",
-    description: "The official adoption application form. Please complete this form to begin the adoption process.",
+    title: "Foxhound Adoption Agreement",
+    description: "The official adoption agreement form. Please review and complete this document as part of the adoption process.",
     icon: ClipboardList,
-    category: "Adoption"
-  },
-  {
-    title: "Tips on Housetraining",
-    description: "Helpful tips and guidance for housetraining your newly adopted foxhound.",
-    icon: BookOpen,
-    category: "Resources"
-  },
-  {
-    title: "General Information on Foxhounds",
-    description: "Learn about the American Foxhound breed, their temperament, care needs, and history.",
-    icon: HelpCircle,
-    category: "Resources"
+    category: "Adoption",
+    file: "/documents/FOXHOUND ADOPTION AGREEMENT.docx"
   },
   {
     title: "Foxhound Adoption Questionnaire",
     description: "A questionnaire to help us understand your lifestyle and match you with the right hound.",
     icon: FileCheck,
-    category: "Adoption"
+    category: "Adoption",
+    file: "/documents/FRIENDSOFTHEFOXHOUND ADOPTION QUESTIONAIRE.docx"
   },
   {
-    title: "Foxhound Buyback/Surrender Policy",
+    title: "General Information on American Foxhounds",
+    description: "Learn about the American Foxhound breed, their temperament, care needs, and history.",
+    icon: HelpCircle,
+    category: "Resources",
+    file: "/documents/GENERAL INFORMATION ON AMERICAN FOXHOUNDS.docx"
+  },
+  {
+    title: "Tips on Housetraining",
+    description: "Helpful tips and guidance for housetraining your newly adopted foxhound.",
+    icon: BookOpen,
+    category: "Resources",
+    file: "/documents/TIPS ON HOUSETRAINING.docx"
+  },
+  {
+    title: "Foxhound Buyback / Surrender Policy",
     description: "Information about our policies for returning or surrendering an adopted foxhound.",
     icon: Undo2,
-    category: "Policy"
-  }
+    category: "Policy",
+    file: "/documents/BIRD KENNEL FOXHOUND BUYBACK.docx"
+  },
 ]
 
 export default function DocumentsPage() {
@@ -101,12 +106,11 @@ export default function DocumentsPage() {
       <section className="py-24 px-6 bg-background">
         <div className="max-w-4xl mx-auto">
           <div className="space-y-4">
-            {documents.map((doc, index) => (
+            {documents.map((doc) => (
               <RevealSection key={doc.title}>
                 <motion.div
                   whileHover={{ x: 8, backgroundColor: "hsl(var(--secondary))" }}
                   className="bg-card rounded-2xl border border-border p-8 transition-all group"
-                  data-cursor-hover
                 >
                   <div className="flex items-start gap-6">
                     <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
@@ -119,10 +123,12 @@ export default function DocumentsPage() {
                           <h3 className="font-serif text-xl font-semibold text-foreground mt-2">{doc.title}</h3>
                           <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{doc.description}</p>
                         </div>
-                        <Button variant="outline" className="shrink-0 rounded-full group/btn" data-cursor-hover>
-                          <Download className="w-4 h-4 mr-2 transition-transform group-hover/btn:-translate-y-1" />
-                          Download
-                        </Button>
+                        <a href={doc.file} download className="shrink-0">
+                          <Button variant="outline" className="rounded-full group/btn w-full sm:w-auto">
+                            <Download className="w-4 h-4 mr-2 transition-transform group-hover/btn:-translate-y-1" />
+                            Download
+                          </Button>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -141,7 +147,6 @@ export default function DocumentsPage() {
               <motion.div
                 whileHover={{ y: -8 }}
                 className="bg-card p-10 rounded-2xl border border-border shadow-lg h-full"
-                data-cursor-hover
               >
                 <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
                   <FileText className="w-7 h-7 text-primary" />
@@ -153,7 +158,7 @@ export default function DocumentsPage() {
                   If you have any questions about the adoption forms or need assistance filling them out, don&apos;t hesitate to reach out.
                 </p>
                 <Button asChild variant="outline" className="rounded-full">
-                  <a href="mailto:BirdKennels@gmail.com" data-cursor-hover>
+                  <a href="mailto:BirdKennels@gmail.com">
                     Contact Us
                   </a>
                 </Button>
@@ -164,7 +169,6 @@ export default function DocumentsPage() {
               <motion.div
                 whileHover={{ y: -8 }}
                 className="bg-primary text-primary-foreground p-10 rounded-2xl shadow-lg h-full"
-                data-cursor-hover
               >
                 <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center mb-6">
                   <ClipboardList className="w-7 h-7 text-white" />
@@ -176,7 +180,7 @@ export default function DocumentsPage() {
                   Once you&apos;ve reviewed the documents and filled out the forms, check out our available hounds to find your perfect match.
                 </p>
                 <Button asChild className="bg-white text-primary hover:bg-white/90 rounded-full group">
-                  <Link href="/available" data-cursor-hover>
+                  <Link href="/available">
                     View Available Hounds
                     <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </Link>

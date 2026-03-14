@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
+import Image from "@/node_modules/next/image"
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -317,11 +318,9 @@ export function SiteHeader() {
               transition={{ duration: 0.5, delay: 0.35 }}
             >
               <Link href="/" className="hdr-logo">
-                <div className="hdr-badge">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2 .336-3.5 2.5-3.5 4.5C3 9 4 10 4 10H3v2h.5L5 21h3l1-5h2l1 5h3l.5-8.5c.5-.5 1.5-1.5 1.5-3s-1-2.5-1-2.5L16 6l-1.5-1-1 1.5L12 5l-2 .172Z"/>
-                  </svg>
-                </div>
+              <div className="hdr-badge">
+  <Image src="/images/logo.png" alt="Bird Kennel logo" width={36} height={36} className="object-contain rounded-full" />
+</div>
                 <div className="hdr-wordmark">
                   <span className="hdr-name">Bird Kennel</span>
                   <span className="hdr-sub">Ruffin, NC</span>

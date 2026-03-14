@@ -2,16 +2,13 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion"
-import { useRef } from "react"
+import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import { useRef, useState, useEffect } from "react"
 import { ArrowRight, Heart, Users, Home as HomeIcon, Dog, ChevronDown, Play, ArrowUpRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 
-// ─── Single font import ───────────────────────────────────────────────────────
-// Playfair Display → headings / display text
-// Inter           → all body, labels, UI copy
 const fontUrl = "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap"
 
 const fontStyle = `
@@ -23,6 +20,38 @@ const fontStyle = `
   .f-display { font-family: var(--font-display); }
   .f-body    { font-family: var(--font-body); }
 `
+
+const slideshowImages = [
+  "/images/multiple/1.JPG",
+  "/images/multiple/2.JPEG",
+  "/images/multiple/3.JPG",
+  "/images/multiple/4.JPG",
+  "/images/multiple/5.JPG",
+  "/images/multiple/6.JPG",
+  "/images/multiple/7.JPG",
+  "/images/multiple/8.JPG",
+  "/images/multiple/9.JPEG",
+  "/images/multiple/10.JPG",
+  "/images/multiple/11.JPG",
+  "/images/multiple/12.JPG",
+  "/images/multiple/13.JPG",
+  "/images/multiple/14.JPG",
+  "/images/multiple/15.JPG",
+  "/images/multiple/16.JPG",
+  "/images/multiple/17.JPG",
+  "/images/multiple/18.jpeg",
+  "/images/multiple/19.JPG",
+  "/images/multiple/20.JPG",
+  "/images/multiple/21.JPG",
+  "/images/multiple/22.JPG",
+  "/images/multiple/23.JPG",
+  "/images/multiple/24.JPG",
+  "/images/multiple/25.jpeg",
+  "/images/multiple/26.JPG",
+  "/images/multiple/27.JPG",
+  "/images/multiple/28.JPG",
+  "/images/multiple/29.JPG",
+]
 
 const team = [
   {
@@ -106,15 +135,67 @@ function MagneticButton({ children, href, variant = "default", className = "" }:
   )
 }
 
-function ParallaxImage({ src, alt, className = "" }: { src: string, alt: string, className?: string }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"])
+function AutoSlideshow({ className = "" }: { className?: string }) {
+  const [current, setCurrent] = useState(0)
+  const [prev, setPrev] = useState<number | null>(null)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setPrev(current)
+      setCurrent((c) => (c + 1) % slideshowImages.length)
+    }, 3500)
+    return () => clearInterval(timer)
+  }, [current])
+
   return (
-    <div ref={ref} className={`overflow-hidden relative ${className}`}>
-      <motion.div style={{ y }} className="h-[120%] w-full -mt-[10%] relative">
-        <Image src={src} alt={alt} fill className="object-cover" />
+    <div className={`relative overflow-hidden rounded-xl shadow-2xl ${className}`}>
+      {/* Previous image fading out */}
+      {prev !== null && (
+        <motion.div
+          key={`prev-${prev}`}
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
+          className="absolute inset-0"
+        >
+          <Image src={slideshowImages[prev]} alt="" fill className="object-cover" />
+        </motion.div>
+      )}
+
+      {/* Current image fading/zooming in */}
+      <motion.div
+        key={`curr-${current}`}
+        initial={{ opacity: 0, scale: 1.04 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.9, ease: "easeInOut" }}
+        className="absolute inset-0"
+      >
+        <Image
+          src={slideshowImages[current]}
+          alt="Bird Kennel foxhound"
+          fill
+          className="object-cover"
+          priority={current === 0}
+        />
       </motion.div>
+
+      {/* Dot indicators */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+        {slideshowImages.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => { setPrev(current); setCurrent(i) }}
+            className={`rounded-full transition-all duration-300 ${
+              i === current
+                ? "w-5 h-1.5 bg-white"
+                : "w-1.5 h-1.5 bg-white/40 hover:bg-white/70"
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Subtle vignette */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none z-[1]" />
     </div>
   )
 }
@@ -256,11 +337,11 @@ export default function HomePage() {
             </RevealSection>
 
             <RevealSection className="relative">
-              <ParallaxImage src="/images/kennel-facility.jpg" alt="Bird Kennel facility" className="aspect-[4/5] rounded-xl shadow-2xl" />
+              <AutoSlideshow className="aspect-[4/5]" />
               <motion.div
                 initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }} transition={{ delay: 0.4 }}
-                className="absolute -bottom-8 -left-8 bg-card p-7 rounded-xl shadow-2xl border border-border"
+                className="absolute -bottom-8 -left-8 bg-card p-7 rounded-xl shadow-2xl border border-border z-10"
               >
                 <p className="f-display text-5xl font-bold text-primary">K-978</p>
                 <p className="f-body text-muted-foreground text-xs mt-1 tracking-wide uppercase">S.F.S.B. Registered Kennel</p>
@@ -301,18 +382,15 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <RevealSection className="order-2 lg:order-1">
               <div className="relative flex items-center justify-center">
-  <Image
-    src="/images/logo.png"
-    alt="Friends of the Foxhound logo"
-    width={420}
-    height={420}
-    className="object-contain"
-  />
-</div>                <motion.div className="absolute inset-0 rounded-xl bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-xl">
-                    <Play className="w-7 h-7 text-primary ml-1" />
-                  </div>
-                </motion.div>
+                <Image
+                  src="/images/logo.png"
+                  alt="Friends of the Foxhound logo"
+                  width={420}
+                  height={420}
+                  className="object-contain"
+                />
+              </div>
+
             </RevealSection>
 
             <RevealSection className="order-1 lg:order-2">

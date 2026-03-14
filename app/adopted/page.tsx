@@ -180,15 +180,9 @@ export default function AdoptedPage() {
 
       <section ref={heroRef} className="relative h-[60vh] min-h-[450px] flex items-end overflow-hidden">
 
-        <motion.div className="absolute inset-0" style={{ y: heroY }}>
+        <motion.div className="absolute inset-0 bg-black" style={{ y: heroY }}>
 
-          <Image
-            src="/images/hound-tutter.jpg"
-            alt="Adopted foxhounds"
-            fill
-            className="object-cover"
-            priority
-          />
+         
 
         </motion.div>
 
