@@ -188,7 +188,7 @@ export default function FriendsPage() {
             
             <RevealSection>
               <ParallaxImage
-                src="/images/hound-goose.jpg"
+                src="/images/adopted/hound-tutter.jpg"
                 alt="American Foxhound looking for a home"
                 className="aspect-[4/5] rounded-2xl shadow-2xl relative"
               />

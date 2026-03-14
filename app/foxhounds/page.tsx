@@ -251,8 +251,8 @@ export default function FoxhoundsPage() {
                   <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8 border-background/30 text-background hover:bg-background hover:text-foreground">
-                <a href="mailto:BirdKennels@gmail.com" data-cursor-hover>
+              <Button asChild variant="outline" size="lg" className=" text-black rounded-full px-8 border-background/30 text-background hover:bg-background hover:text-foreground">
+                <a href="mailto:BirdKennels@gmail.com" data-cursor-hover className="text-black">
                   Contact Us
                 </a>
               </Button>
