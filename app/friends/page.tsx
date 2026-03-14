@@ -142,7 +142,7 @@ export default function FriendsPage() {
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-2" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full px-8 border-white/30 text-white hover:bg-white hover:text-foreground">
+              <Button asChild size="lg" variant="outline" className="rounded-full px-8 border-white/30 text-black hover:bg-white hover:text-foreground">
                 <a href="#donate" data-cursor-hover>
                   <Heart className="mr-2 h-4 w-4" />
                   Donate Now
@@ -323,7 +323,7 @@ export default function FriendsPage() {
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-2" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8 border-white/30 text-white hover:bg-white hover:text-primary">
+              <Button asChild variant="outline" size="lg" className="rounded-full px-8 border-white/30 text-red-700 hover:bg-white hover:text-primary">
                 <Link href="/documents" data-cursor-hover>
                   <FileText className="mr-2 h-4 w-4" />
                   Documents & Forms
