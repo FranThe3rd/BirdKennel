@@ -300,14 +300,19 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <RevealSection className="order-2 lg:order-1">
-              <div className="relative group">
-                <ParallaxImage src="/images/foxhound-closeup.jpg" alt="American Foxhound portrait" className="aspect-square rounded-xl shadow-2xl" />
-                <motion.div className="absolute inset-0 rounded-xl bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+              <div className="relative flex items-center justify-center">
+  <Image
+    src="/images/logo.png"
+    alt="Friends of the Foxhound logo"
+    width={420}
+    height={420}
+    className="object-contain"
+  />
+</div>                <motion.div className="absolute inset-0 rounded-xl bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                   <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-xl">
                     <Play className="w-7 h-7 text-primary ml-1" />
                   </div>
                 </motion.div>
-              </div>
             </RevealSection>
 
             <RevealSection className="order-1 lg:order-2">
