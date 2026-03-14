@@ -75,10 +75,10 @@ const team = [
 ]
 
 const stats = [
-  { label: "Hounds Rescued", value: "50+", icon: Dog },
-  { label: "Happy Adoptions", value: "30+", icon: Heart },
-  { label: "Volunteers", value: "10+", icon: Users },
-  { label: "Forever Homes", value: "25+", icon: HomeIcon },
+  { label: "Hounds Rescued", value: "10+", icon: Dog },
+  { label: "Happy Adoptions", value: "1+", icon: Heart },
+  { label: "Volunteers", value: "3+", icon: Users },
+  { label: "Forever Homes", value: "5+", icon: HomeIcon },
 ]
 
 function AnimatedText({ children, className = "", delay = 0 }: { children: string, className?: string, delay?: number }) {
