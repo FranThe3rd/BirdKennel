@@ -29,8 +29,8 @@ const availableHounds = [
   {
     name: "Bo",
     images: [
-      "/images/hound-bo.jpg",
-      "/images/hound-bo2.jpg"
+      "/images/available/hound-bo.jpg",
+      "/images/available/hound-bo2.jpg"
     ],
     origin: "Hertford County, NC",
     description:
@@ -39,8 +39,8 @@ const availableHounds = [
   {
     name: "Rachel & Monica",
     images: [
-      "/images/hound-monica-rachel.jpg",
-      "/images/hound-monica-rachel2.jpg"
+      "/images/available/hound-monica-rachel.jpg",
+      "/images/available/hound-monica-rachel2.jpg"
     ],
     origin: "Hertford County, NC",
     description:

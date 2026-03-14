@@ -29,7 +29,7 @@ function RevealSection({ children, className = "" }: { children: React.ReactNode
 const foxhounds = [
   {
     name: "Winn-Dixie",
-    image: "/images/hound-winn-dixie.jpg",
+    image: "/images/foxhounds/hound-winn-dixie.jpg",
     sfsbNumber: "290103",
     sex: "Female",
     whelped: "July 10, 2023",
@@ -39,7 +39,7 @@ const foxhounds = [
   },
   {
     name: "Goose",
-    image: "/images/hound-goose.jpg",
+    image: "/images/foxhounds/hound-goose.jpg",
     sfsbNumber: "290101",
     sex: "Male",
     whelped: "July 10, 2023",
@@ -49,7 +49,7 @@ const foxhounds = [
   },
   {
     name: "Penny",
-    image: "/images/hound-penny.jpg",
+    image: "/images/foxhounds/hound-penny.jpg",
     sfsbNumber: "290102",
     sex: "Female",
     whelped: "July 10, 2023",
@@ -59,7 +59,7 @@ const foxhounds = [
   },
   {
     name: "Rocket",
-    image: "/images/hound-rocket.jpg",
+    image: "/images/foxhounds/hound-rocket.jpg",
     sfsbNumber: "292003",
     sex: "Male",
     whelped: "July 4, 2022",
@@ -69,7 +69,7 @@ const foxhounds = [
   },
   {
     name: "Dynomite",
-    image: "/images/hound-dynomite.jpg",
+    image: "/images/foxhounds/hound-dynomite.jpg",
     sfsbNumber: "293792",
     sex: "Male",
     whelped: "March 30, 2022",
@@ -79,7 +79,7 @@ const foxhounds = [
   },
   {
     name: "Crystal",
-    image: "/images/hound-crystal.jpg",
+    image: "/images/foxhounds/hound-crystal.jpg",
     sfsbNumber: "293791",
     sex: "Female",
     whelped: "March 30, 2022",
@@ -89,7 +89,7 @@ const foxhounds = [
   },
   {
     name: "Biscuit",
-    image: "/images/hound-biscuit.jpg",
+    image: "/images/foxhounds/hound-biscuit.jpg",
     sfsbNumber: null,
     sex: "Unknown",
     whelped: "Unknown",
