@@ -11,7 +11,7 @@ type Message = {
   content: string
 }
 
-async function generateContent(contents: object[], model = "gemini-2.0-flash") {
+async function generateContent(contents: object[], model = "gemini-2.5-flash") {
   const res = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -30,9 +30,9 @@ export default function BirdKennelChatbot() {
   const [sendingReport, setSendingReport] = useState(false)
   const [readyForSubmission, setReadyForSubmission] = useState(false)
 
-  const publicKey = "XbuRWAZjbs0iqLEbG"
-  const serviceID = "service_j2pss1r"
-  const templateID = "template_k39zwyn"
+  const publicKey = "69HfnhZeYr4Zv-bQ1"
+  const serviceID = "service_8pri4at"
+  const templateID = "template_c8n51kj"
 
   const businessContext = `
 You are a friendly, knowledgeable customer service AI for Bird Kennel LLC, a registered American Foxhound kennel in Ruffin, NC (Kennel number K-978), registered with the Standard Foxhound Stud Book.
@@ -60,7 +60,7 @@ Team:
 Your goals:
 - Answer questions about the kennel, foxhounds, training, adoption, and #FriendsoftheFoxhound
 - Help people inquire about purchasing hounds, adopting, fostering, or donating
-- For adoption inquiries, collect: name, contact (email or phone), which hound they're interested in
+- For adoption inquiries YOU MUST HAVE: name, contact (email or phone), which hound they're interested in
 - For training or purchase inquiries, collect: name, contact, what they're looking for
 - When you have enough info to follow up (name + contact + intent), include this exact tag at the END of your message only:
 
@@ -224,7 +224,7 @@ ${conversationText}
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-center"
+            className="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-center z-[51]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
