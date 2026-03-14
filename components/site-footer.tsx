@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { Dog, Phone, Mail, MapPin, Clock, Instagram, Facebook, ArrowUpRight } from "lucide-react"
+import { Dog, Phone, Mail, MapPin, Clock, Instagram, Facebook, MessageCircle, ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const navigation = {
@@ -57,7 +57,7 @@ export function SiteFooter() {
             <div className="flex gap-3">
               <motion.a 
                 whileHover={{ scale: 1.1, y: -2 }}
-                href="https://instagram.com" 
+                href="https://www.instagram.com/birdkennels/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="w-10 h-10 rounded-full bg-background/10 flex items-center justify-center text-background/70 hover:text-background hover:bg-primary transition-colors"
@@ -68,7 +68,7 @@ export function SiteFooter() {
               </motion.a>
               <motion.a 
                 whileHover={{ scale: 1.1, y: -2 }}
-                href="https://facebook.com" 
+                href="https://www.facebook.com/people/Bird-Kennel/61572717091443/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="w-10 h-10 rounded-full bg-background/10 flex items-center justify-center text-background/70 hover:text-background hover:bg-primary transition-colors"
@@ -76,6 +76,17 @@ export function SiteFooter() {
               >
                 <Facebook className="w-4 h-4" />
                 <span className="sr-only">Facebook</span>
+              </motion.a>
+              <motion.a 
+                whileHover={{ scale: 1.1, y: -2 }}
+                href="https://www.snapchat.com/@birdkennel" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-10 h-10 rounded-full bg-background/10 flex items-center justify-center text-background/70 hover:text-background hover:bg-primary transition-colors"
+                data-cursor-hover
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span className="sr-only">Snapchat</span>
               </motion.a>
             </div>
           </motion.div>
