@@ -96,29 +96,7 @@ export default function LittersPage() {
               We have not bred our hounds yet, but we will soon! Subscribe to our page to be notified when we have our first litter of registered American Foxhound puppies.
             </p>
             
-            <div className="bg-card border border-border rounded-2xl p-10 mb-10 shadow-lg">
-              <h3 className="font-serif text-2xl font-semibold text-foreground mb-3">
-                Get Notified
-              </h3>
-              <p className="text-muted-foreground mb-8">
-                Be the first to know when we have puppies available.
-              </p>
-              <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <div className="relative flex-1">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="w-full pl-12 pr-4 py-4 bg-background border border-input rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                    data-cursor-hover
-                  />
-                </div>
-                <Button type="submit" className="rounded-full px-6" data-cursor-hover>
-                  Subscribe
-                </Button>
-              </form>
-            </div>
-
+            
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild variant="outline" size="lg" className="rounded-full group">
                 <Link href="/foxhounds" data-cursor-hover>
