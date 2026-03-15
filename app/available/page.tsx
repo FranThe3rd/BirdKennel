@@ -46,16 +46,7 @@ const availableHounds = [
     description:
       "Monica and Rachel came from Hertford County NC. They must be adopted together."
   },
-  {
-    name: "Dudea",
-    images: [
-      "/images/available/hound-monica-rachel.jpg",
-      "/images/available/hound-monica-rachel2.jpg"
-    ],
-    origin: "Hertford County, NC",
-    description:
-      "Monica and Rachel came from Hertford County NC. They must be adopted together."
-  }
+  
 
 ]
 
