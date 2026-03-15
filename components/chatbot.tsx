@@ -30,9 +30,9 @@ export default function BirdKennelChatbot() {
   const [sendingReport, setSendingReport] = useState(false)
   const [readyForSubmission, setReadyForSubmission] = useState(false)
 
-  const publicKey = "69HfnhZeYr4Zv-bQ1"
-  const serviceID = "service_8pri4at"
-  const templateID = "template_c8n51kj"
+  const publicKey = "pzl6WPnEuVGPV6GWX"
+  const serviceID = "service_00rj9i4"
+  const templateID = "template_yy2622z"
 
   const businessContext = `
 You are a friendly, knowledgeable customer service AI for Bird Kennel LLC, a registered American Foxhound kennel in Ruffin, NC (Kennel number K-978), registered with the Standard Foxhound Stud Book.
@@ -167,8 +167,6 @@ ${conversationText}
         serviceID,
         templateID,
         {
-          user_name: "Bird Kennel Website Chat",
-          user_email: "See inquiry below",
           message: summary,
         },
         publicKey
