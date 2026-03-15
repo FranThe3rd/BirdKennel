@@ -417,44 +417,48 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── TEAM ── */}
-      <section className="py-32 px-6 bg-secondary/50">
-        <div className="max-w-7xl mx-auto">
-          <RevealSection className="text-center mb-20">
-            <span className="f-body inline-block text-primary font-semibold text-xs tracking-[0.25em] uppercase mb-6">The Team</span>
-            <h2 className="f-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-5">
-              Meet Our <span className="italic text-primary">Dedicated</span> Team
-            </h2>
-            <p className="f-body text-muted-foreground text-base max-w-xl mx-auto font-light leading-relaxed">
-              Passionate individuals committed to the care and preservation of American Foxhounds.
-            </p>
-          </RevealSection>
+{/* ── TEAM ── */}
+<section className="py-32 px-6 bg-secondary/50">
+  <div className="max-w-7xl mx-auto">
+    <RevealSection className="text-center mb-20">
+      <span className="f-body inline-block text-primary font-semibold text-xs tracking-[0.25em] uppercase mb-6">
+        The Team
+      </span>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {team.map((member) => (
-              <RevealSection key={member.name}>
-                <motion.div
-                  whileHover={{ y: -10 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  className="group bg-card rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-500 border border-border"
-                >
-                  <div className="relative aspect-[3/4] overflow-hidden">
-                    <Image src={member.image} alt={member.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/10 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-7">
-                      <p className="f-body text-primary font-semibold text-xs uppercase tracking-widest mb-1">{member.role}</p>
-                      <h3 className="f-display text-2xl font-semibold text-white">{member.name}</h3>
-                    </div>
-                  </div>
-                  <div className="p-7 bg-card">
-                    <p className="f-body text-muted-foreground text-sm leading-relaxed font-light">{member.description}</p>
-                  </div>
-                </motion.div>
-              </RevealSection>
-            ))}
-          </div>
-        </div>
-      </section>
+      <h2 className="f-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-5">
+        Meet Our <span className="italic text-primary">Dedicated</span> Team
+      </h2>
+
+      <p className="f-body text-muted-foreground text-base max-w-xl mx-auto font-light leading-relaxed">
+        Passionate individuals committed to the care and preservation of American Foxhounds.
+      </p>
+    </RevealSection>
+
+    <div className="grid md:grid-cols-3 gap-8">
+      {team.map((member) => (
+        <RevealSection key={member.name}>
+          <motion.div
+            whileHover={{ y: -10 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="group bg-card rounded-xl p-8 shadow-md hover:shadow-2xl transition-shadow duration-500 border border-border"
+          >
+            <p className="f-body text-primary font-semibold text-xs uppercase tracking-widest mb-2">
+              {member.role}
+            </p>
+
+            <h3 className="f-display text-2xl font-semibold text-foreground mb-4">
+              {member.name}
+            </h3>
+
+            <p className="f-body text-muted-foreground text-sm leading-relaxed font-light">
+              {member.description}
+            </p>
+          </motion.div>
+        </RevealSection>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* ── CTA ── */}
       <section className="py-32 px-6 bg-primary text-primary-foreground relative overflow-hidden">
