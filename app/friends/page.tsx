@@ -295,7 +295,7 @@ export default function FriendsPage() {
             <div className="flex flex-wrap justify-center gap-4 mb-10">
               <motion.a 
                 whileHover={{ scale: 1.05, y: -4 }}
-                href="https://instagram.com" 
+                href="https://www.instagram.com/birdkennels/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="flex items-center gap-3 px-6 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl hover:bg-white/20 transition-colors"
@@ -306,7 +306,7 @@ export default function FriendsPage() {
               </motion.a>
               <motion.a 
                 whileHover={{ scale: 1.05, y: -4 }}
-                href="https://facebook.com" 
+                href="https://www.facebook.com/people/Bird-Kennel/61572717091443/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="flex items-center gap-3 px-6 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl hover:bg-white/20 transition-colors"
