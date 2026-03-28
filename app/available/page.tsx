@@ -26,6 +26,22 @@ function RevealSection({ children, className = "" }: { children: React.ReactNode
 }
 
 const availableHounds = [
+
+  {
+    name: "Currently No Available Dogs",
+    images: [
+      
+    ],
+    origin: "",
+    description:
+      ""
+  },
+
+]
+
+  /** 
+const availableHounds = [
+
   {
     name: "Bo",
     images: [
@@ -49,6 +65,7 @@ const availableHounds = [
   
 
 ]
+*/
 
 export default function AvailablePage() {
   const heroRef = useRef<HTMLDivElement>(null)
