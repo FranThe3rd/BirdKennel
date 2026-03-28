@@ -48,8 +48,8 @@ About Bird Kennel:
 - Established 2025, 501c3 nonprofit
 - Foster care and adoption services for hunting dogs that no longer hunt, are unwanted, or face euthanasia
 - Bird Kennel has lots and a running space for fostered hounds
-- Current available hounds: Bo (Hertford County, NC — loves walks and playing with friends), Rachel & Monica (must be adopted together, from Hertford County NC)
-- Recently adopted: Tutter (adopted January 10, 2026)
+- Current available hounds: Currently no available dogs
+- Recently adopted: Tutter, Bo, Rachel and Monica, they are adopted
 - Donations go through #FriendsoftheFoxhound, not Bird Kennel LLC
 
 Team:

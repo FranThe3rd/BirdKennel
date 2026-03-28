@@ -45,19 +45,19 @@ const adoptedHounds = [
       "/images/available/hound-bo.jpg",
       "/images/available/hound-bo2.jpg"
     ],
-    adoptedDate: "Recently Adopted",
+    adoptedDate: "March 27, 2026",
     description:
       "Bo is a well mannered hound who loves to be outside, going on walks, and playing with friends."
   },
   {
-    name: "Rachel & Monica",
+    name: "March 27, 2026",
     images: [
       "/images/available/hound-monica-rachel.jpg",
       "/images/available/hound-monica-rachel2.jpg"
     ],
     adoptedDate: "Recently Adopted",
     description:
-      "Monica and Rachel came from Hertford County NC. They must be adopted together."
+      "Monica and Rachel came from Hertford County NC. They were adopted together."
   }
 ];
 
