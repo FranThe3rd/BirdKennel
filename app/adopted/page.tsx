@@ -50,12 +50,12 @@ const adoptedHounds = [
       "Bo is a well mannered hound who loves to be outside, going on walks, and playing with friends."
   },
   {
-    name: "March 27, 2026",
+    name: "Monica & Rachel",
     images: [
       "/images/available/hound-monica-rachel.jpg",
       "/images/available/hound-monica-rachel2.jpg"
     ],
-    adoptedDate: "Recently Adopted",
+    adoptedDate: "March 27, 2026",
     description:
       "Monica and Rachel came from Hertford County NC. They were adopted together."
   }
