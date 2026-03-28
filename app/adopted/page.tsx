@@ -38,8 +38,29 @@ const adoptedHounds = [
     adoptedDate: "January 10, 2026",
     description:
       "Tutter was an awesome hound to foster and got along well with everyone. He loved to eat, go for walks, and bark up trees at squirrels."
+  },
+  {
+    name: "Bo",
+    images: [
+      "/images/available/hound-bo.jpg",
+      "/images/available/hound-bo2.jpg"
+    ],
+    adoptedDate: "Recently Adopted",
+    description:
+      "Bo is a well mannered hound who loves to be outside, going on walks, and playing with friends."
+  },
+  {
+    name: "Rachel & Monica",
+    images: [
+      "/images/available/hound-monica-rachel.jpg",
+      "/images/available/hound-monica-rachel2.jpg"
+    ],
+    adoptedDate: "Recently Adopted",
+    description:
+      "Monica and Rachel came from Hertford County NC. They must be adopted together."
   }
-]
+];
+
 
 
 const stats = [
