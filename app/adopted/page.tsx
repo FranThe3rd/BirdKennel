@@ -30,14 +30,35 @@ function RevealSection({ children, className = "" }: { children: React.ReactNode
 
 const adoptedHounds = [
   {
-    name: "Tutter",
-    images: [
-      "/images/adopted/hound-tutter.jpg",
-      "/images/adopted/hound-tutter2.jpg"
-    ],
-    adoptedDate: "January 10, 2026",
+    name: "Buddy",
+    images: ["/images/adopted/hound-buddy.JPG"],
+    adoptedDate: "April 4, 2026",
     description:
-      "Tutter was an awesome hound to foster and got along well with everyone. He loved to eat, go for walks, and bark up trees at squirrels."
+      "Buddy found his forever home and is settling in with his new family."
+  },
+  {
+    name: "Donny",
+    images: ["/images/adopted/hound-donny.JPG"],
+    adoptedDate: "April 4, 2026",
+    description:
+      "Donny is loved in his new home and enjoys plenty of walks and couch time."
+  },
+  {
+    name: "Randy",
+    images: ["/images/adopted/hound-randy.JPG"],
+    adoptedDate: "April 4, 2026",
+    description:
+      "Randy was a wonderful hound to place and is thriving with his adopters."
+  },
+  {
+    name: "Monica & Rachel",
+    images: [
+      "/images/available/hound-monica-rachel.jpg",
+      "/images/available/hound-monica-rachel2.jpg"
+    ],
+    adoptedDate: "March 27, 2026",
+    description:
+      "Monica and Rachel came from Hertford County NC. They were adopted together."
   },
   {
     name: "Bo",
@@ -50,16 +71,27 @@ const adoptedHounds = [
       "Bo is a well mannered hound who loves to be outside, going on walks, and playing with friends."
   },
   {
-    name: "Monica & Rachel",
+    name: "Tutter",
     images: [
-      "/images/available/hound-monica-rachel.jpg",
-      "/images/available/hound-monica-rachel2.jpg"
+      "/images/adopted/hound-tutter.jpg",
+      "/images/adopted/hound-tutter2.jpg"
     ],
-    adoptedDate: "March 27, 2026",
+    adoptedDate: "January 10, 2026",
     description:
-      "Monica and Rachel came from Hertford County NC. They were adopted together."
+      "Tutter was an awesome hound to foster and got along well with everyone. He loved to eat, go for walks, and bark up trees at squirrels."
   }
 ];
+
+/** Keeps slide indexes aligned with adoptedHounds (fixes Fast Refresh / stale state). */
+function normalizeAdoptedIndexes(prev: number[]): number[] {
+  return adoptedHounds.map((hound, i) => {
+    const len = hound.images.length
+    if (!len) return 0
+    const raw = prev[i]
+    if (typeof raw !== "number" || !Number.isFinite(raw)) return 0
+    return ((raw % len) + len) % len
+  })
+}
 
 
 
@@ -89,6 +121,9 @@ export default function AdoptedPage() {
   const [selectedDog, setSelectedDog] = useState<number | null>(null)
   const [modalIndex, setModalIndex] = useState(0)
 
+  useEffect(() => {
+    setIndexes(prev => normalizeAdoptedIndexes(prev))
+  }, [])
 
   useEffect(() => {
 
@@ -96,11 +131,12 @@ export default function AdoptedPage() {
 
     const interval = setInterval(() => {
 
-      setIndexes(prev =>
-        prev.map((index, i) =>
+      setIndexes(prev => {
+        const base = normalizeAdoptedIndexes(prev)
+        return base.map((index, i) =>
           (index + 1) % adoptedHounds[i].images.length
         )
-      )
+      })
 
     }, 3500)
 
@@ -111,7 +147,7 @@ export default function AdoptedPage() {
 
   const nextImage = (i: number) => {
     setIndexes(prev => {
-      const copy = [...prev]
+      const copy = normalizeAdoptedIndexes(prev)
       copy[i] = (copy[i] + 1) % adoptedHounds[i].images.length
       return copy
     })
@@ -119,8 +155,10 @@ export default function AdoptedPage() {
 
   const prevImage = (i: number) => {
     setIndexes(prev => {
-      const copy = [...prev]
-      copy[i] = (copy[i] - 1 + adoptedHounds[i].images.length) % adoptedHounds[i].images.length
+      const copy = normalizeAdoptedIndexes(prev)
+      copy[i] =
+        (copy[i] - 1 + adoptedHounds[i].images.length) %
+        adoptedHounds[i].images.length
       return copy
     })
   }
@@ -139,6 +177,16 @@ export default function AdoptedPage() {
     )
   }
 
+  const modalDog =
+    selectedDog !== null ? adoptedHounds[selectedDog] : null
+  const modalImageSrc =
+    modalDog && modalDog.images.length > 0
+      ? modalDog.images[
+          ((modalIndex % modalDog.images.length) +
+            modalDog.images.length) %
+            modalDog.images.length
+        ]
+      : null
 
   return (
     <main className="min-h-screen overflow-x-hidden relative">
@@ -151,7 +199,7 @@ export default function AdoptedPage() {
 
       <AnimatePresence>
 
-        {selectedDog !== null && (
+        {selectedDog !== null && modalImageSrc ? (
 
           <motion.div
             initial={{ opacity: 0 }}
@@ -182,7 +230,7 @@ export default function AdoptedPage() {
             </button>
 
             <Image
-              src={adoptedHounds[selectedDog].images[modalIndex]}
+              src={modalImageSrc}
               alt="Dog"
               width={1400}
               height={1000}
@@ -191,7 +239,7 @@ export default function AdoptedPage() {
 
           </motion.div>
 
-        )}
+        ) : null}
 
       </AnimatePresence>
 
@@ -231,11 +279,17 @@ export default function AdoptedPage() {
 
       <section className="py-24 px-6 bg-background">
 
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto flex flex-col gap-[10px]">
 
           {adoptedHounds.map((hound, i) => {
 
-            const image = hound.images[indexes[i]]
+            const len = hound.images.length
+            const raw = indexes[i]
+            const slideIdx =
+              len > 0 && typeof raw === "number" && Number.isFinite(raw)
+                ? ((raw % len) + len) % len
+                : 0
+            const image = len > 0 ? hound.images[slideIdx] : null
 
             return (
 
@@ -259,27 +313,29 @@ export default function AdoptedPage() {
 
                       <AnimatePresence mode="wait">
 
-                        <motion.div
-                          key={image}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.6 }}
-                          className="absolute inset-0"
-                        >
+                        {image ? (
+                          <motion.div
+                            key={image}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.6 }}
+                            className="absolute inset-0"
+                          >
 
-                          <Image
-                            src={image}
-                            alt={hound.name}
-                            fill
-                            className="object-cover cursor-zoom-in"
-                            onClick={() => {
-                              setSelectedDog(i)
-                              setModalIndex(indexes[i])
-                            }}
-                          />
+                            <Image
+                              src={image}
+                              alt={hound.name}
+                              fill
+                              className="object-cover cursor-zoom-in"
+                              onClick={() => {
+                                setSelectedDog(i)
+                                setModalIndex(slideIdx)
+                              }}
+                            />
 
-                        </motion.div>
+                          </motion.div>
+                        ) : null}
 
                       </AnimatePresence>
 
