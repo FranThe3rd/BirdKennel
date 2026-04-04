@@ -67,6 +67,16 @@ const availableHounds = [
 ]
 */
 
+function normalizeAvailableIndexes(prev: number[]): number[] {
+  return availableHounds.map((hound, i) => {
+    const len = hound.images.length
+    if (!len) return 0
+    const raw = prev[i]
+    if (typeof raw !== "number" || !Number.isFinite(raw)) return 0
+    return ((raw % len) + len) % len
+  })
+}
+
 export default function AvailablePage() {
   const heroRef = useRef<HTMLDivElement>(null)
 
@@ -85,13 +95,20 @@ export default function AvailablePage() {
   const [hovered, setHovered] = useState<number | null>(null)
 
   useEffect(() => {
+    setIndexes(prev => normalizeAvailableIndexes(prev))
+  }, [])
+
+  useEffect(() => {
     const interval = setInterval(() => {
-      setIndexes(prev =>
-        prev.map((index, i) => {
+      setIndexes(prev => {
+        const base = normalizeAvailableIndexes(prev)
+        return base.map((index, i) => {
           if (hovered === i) return index
-          return (index + 1) % availableHounds[i].images.length
+          const len = availableHounds[i].images.length
+          if (!len) return 0
+          return (index + 1) % len
         })
-      )
+      })
     }, 3500)
 
     return () => clearInterval(interval)
@@ -99,21 +116,34 @@ export default function AvailablePage() {
 
   function nextImage(i: number) {
     setIndexes(prev => {
-      const copy = [...prev]
-      copy[i] = (copy[i] + 1) % availableHounds[i].images.length
+      const len = availableHounds[i].images.length
+      if (!len) return prev
+      const copy = normalizeAvailableIndexes(prev)
+      copy[i] = (copy[i] + 1) % len
       return copy
     })
   }
 
   function prevImage(i: number) {
     setIndexes(prev => {
-      const copy = [...prev]
-      copy[i] =
-        (copy[i] - 1 + availableHounds[i].images.length) %
-        availableHounds[i].images.length
+      const len = availableHounds[i].images.length
+      if (!len) return prev
+      const copy = normalizeAvailableIndexes(prev)
+      copy[i] = (copy[i] - 1 + len) % len
       return copy
     })
   }
+
+  const modalDog =
+    selectedDog !== null ? availableHounds[selectedDog] : null
+  const modalImageSrc =
+    modalDog && modalDog.images.length > 0
+      ? modalDog.images[
+          ((selectedImageIndex % modalDog.images.length) +
+            modalDog.images.length) %
+            modalDog.images.length
+        ]
+      : null
 
   return (
     <main className="min-h-screen overflow-x-hidden relative">
@@ -121,7 +151,7 @@ export default function AvailablePage() {
 
       {/* FULLSCREEN IMAGE VIEWER */}
       <AnimatePresence>
-        {selectedDog !== null && (
+        {selectedDog !== null && modalImageSrc ? (
           <motion.div
             className="fixed inset-0 bg-black/95 z-[200] flex items-center justify-center"
             initial={{ opacity: 0 }}
@@ -136,13 +166,13 @@ export default function AvailablePage() {
             </button>
 
             <button
-              onClick={() =>
+              onClick={() => {
+                const len = availableHounds[selectedDog].images.length
+                if (!len) return
                 setSelectedImageIndex(
-                  (selectedImageIndex - 1 +
-                    availableHounds[selectedDog].images.length) %
-                    availableHounds[selectedDog].images.length
+                  (selectedImageIndex - 1 + len) % len
                 )
-              }
+              }}
               className="absolute left-10 text-white"
             >
               <ChevronLeft size={40} />
@@ -156,9 +186,7 @@ export default function AvailablePage() {
               transition={{ duration: 0.35 }}
             >
               <Image
-                src={
-                  availableHounds[selectedDog].images[selectedImageIndex]
-                }
+                src={modalImageSrc}
                 alt="dog"
                 width={1400}
                 height={900}
@@ -167,18 +195,19 @@ export default function AvailablePage() {
             </motion.div>
 
             <button
-              onClick={() =>
+              onClick={() => {
+                const len = availableHounds[selectedDog].images.length
+                if (!len) return
                 setSelectedImageIndex(
-                  (selectedImageIndex + 1) %
-                    availableHounds[selectedDog].images.length
+                  (selectedImageIndex + 1) % len
                 )
-              }
+              }}
               className="absolute right-10 text-white"
             >
               <ChevronRight size={40} />
             </button>
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
 
       {/* HERO */}
@@ -216,7 +245,14 @@ export default function AvailablePage() {
         <div className="max-w-7xl mx-auto space-y-12">
 
           {availableHounds.map((hound, i) => {
-            const currentImage = hound.images[indexes[i]]
+            const len = hound.images.length
+            const raw = indexes[i]
+            const slideIdx =
+              len > 0 && typeof raw === "number" && Number.isFinite(raw)
+                ? ((raw % len) + len) % len
+                : 0
+            const currentImage =
+              len > 0 ? hound.images[slideIdx] ?? null : null
 
             return (
               <RevealSection key={hound.name}>
@@ -233,41 +269,62 @@ export default function AvailablePage() {
                       onMouseLeave={() => setHovered(null)}
                     >
                       <AnimatePresence mode="wait">
-                        <motion.div
-                          key={currentImage}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.8 }}
-                          className="absolute inset-0"
-                        >
-                          <Image
-                            src={currentImage}
-                            alt={hound.name}
-                            fill
-                            className="object-cover cursor-zoom-in"
-                            onClick={() => {
-                              setSelectedDog(i)
-                              setSelectedImageIndex(indexes[i])
-                            }}
-                          />
-                        </motion.div>
+                        {currentImage ? (
+                          <motion.div
+                            key={currentImage}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className="absolute inset-0"
+                          >
+                            <Image
+                              src={currentImage}
+                              alt={hound.name}
+                              fill
+                              className="object-cover cursor-zoom-in"
+                              onClick={() => {
+                                setSelectedDog(i)
+                                setSelectedImageIndex(slideIdx)
+                              }}
+                            />
+                          </motion.div>
+                        ) : (
+                          <motion.div
+                            key={`${hound.name}-no-photo`}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className="absolute inset-0 bg-muted flex items-center justify-center"
+                          >
+                            <p className="text-muted-foreground text-sm px-6 text-center">
+                              Photo coming soon
+                            </p>
+                          </motion.div>
+                        )}
                       </AnimatePresence>
 
                       {/* ARROWS */}
-                      <button
-                        onClick={() => prevImage(i)}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full"
-                      >
-                        <ChevronLeft size={20} />
-                      </button>
+                      {len > 0 ? (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => prevImage(i)}
+                            className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full"
+                          >
+                            <ChevronLeft size={20} />
+                          </button>
 
-                      <button
-                        onClick={() => nextImage(i)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full"
-                      >
-                        <ChevronRight size={20} />
-                      </button>
+                          <button
+                            type="button"
+                            onClick={() => nextImage(i)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full"
+                          >
+                            <ChevronRight size={20} />
+                          </button>
+                        </>
+                      ) : null}
                     </div>
 
                     {/* TEXT */}
