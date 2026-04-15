@@ -31,71 +31,43 @@ const foxhounds = [
     name: "Winn-Dixie",
     image: "/images/foxhounds/hound-winn-dixie.jpg",
     sfsbNumber: "290103",
-    sex: "Female",
-    whelped: "July 10, 2023",
-    litterNumber: "L133505",
-    sire: "Big House Randy (271902)",
-    gyp: "Night Moves Michaela (258868)"
+    sex: "Female"
   },
   {
     name: "Goose",
     image: "/images/foxhounds/hound-goose.jpg",
     sfsbNumber: "290101",
-    sex: "Male",
-    whelped: "July 10, 2023",
-    litterNumber: "L133505",
-    sire: "Big House Randy (271902)",
-    gyp: "Night Moves Michaela (258868)"
+    sex: "Male"
   },
   {
     name: "Penny",
     image: "/images/foxhounds/hound-penny.jpg",
     sfsbNumber: "290102",
-    sex: "Female",
-    whelped: "July 10, 2023",
-    litterNumber: "L133505",
-    sire: "Big House Randy (271902)",
-    gyp: "Night Moves Michaela (258868)"
+    sex: "Female"
   },
   {
     name: "Rocket",
     image: "/images/foxhounds/hound-rocket.jpg",
     sfsbNumber: "292003",
-    sex: "Male",
-    whelped: "July 4, 2022",
-    litterNumber: "L129332",
-    sire: "Fast Lane's Nitro (251109)",
-    gyp: "Fast Lane's Amber (282878)"
+    sex: "Male"
   },
   {
     name: "Dynomite",
     image: "/images/foxhounds/hound-dynomite.jpg",
     sfsbNumber: "293792",
-    sex: "Male",
-    whelped: "March 30, 2022",
-    litterNumber: "L123296",
-    sire: "Elmore's Toby (248873)",
-    gyp: "Nordstrom's T&T Pearl (271973)"
+    sex: "Male"
   },
   {
     name: "Crystal",
     image: "/images/foxhounds/hound-crystal.jpg",
     sfsbNumber: "293791",
-    sex: "Female",
-    whelped: "March 30, 2022",
-    litterNumber: "L123296",
-    sire: "Elmore's Toby (248873)",
-    gyp: "Nordstrom's T&T Pearl (271973)"
+    sex: "Female"
   },
   {
     name: "Biscuit",
     image: "/images/foxhounds/hound-biscuit.jpg",
     sfsbNumber: null,
-    sex: "Unknown",
-    whelped: "Unknown",
-    litterNumber: null,
-    sire: "Unknown",
-    gyp: "Unknown"
+    sex: "Unknown"
   }
 ]
 
@@ -155,7 +127,7 @@ export default function FoxhoundsPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-white/80 text-lg max-w-2xl leading-relaxed"
           >
-            Each hound is registered with the Standard Foxhound Stud Book and comes from proven bloodlines for hunting and trial excellence.
+            Meet the foxhounds in our care and learn more about each dog.
           </motion.p>
         </motion.div>
       </section>
@@ -200,30 +172,9 @@ export default function FoxhoundsPage() {
                       </span>
                     </div>
                     
-                    {hound.sfsbNumber ? (
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between py-2 border-b border-border">
-                          <span className="text-muted-foreground">Whelped</span>
-                          <span className="text-foreground font-medium">{hound.whelped}</span>
-                        </div>
-                        <div className="flex justify-between py-2 border-b border-border">
-                          <span className="text-muted-foreground">Litter #</span>
-                          <span className="text-foreground font-medium">{hound.litterNumber}</span>
-                        </div>
-                        <div className="pt-3 space-y-2">
-                          <p className="text-muted-foreground text-xs">
-                            <span className="font-semibold text-foreground">Sire:</span> {hound.sire}
-                          </p>
-                          <p className="text-muted-foreground text-xs">
-                            <span className="font-semibold text-foreground">Gyp:</span> {hound.gyp}
-                          </p>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-muted-foreground text-sm italic">
-                        Not registered with S.F.S.B.
-                      </p>
-                    )}
+                    <p className="text-muted-foreground text-sm italic">
+                      Contact us for more details about this hound.
+                    </p>
                   </div>
                 </motion.div>
               </RevealSection>
@@ -239,15 +190,15 @@ export default function FoxhoundsPage() {
         <div className="max-w-4xl mx-auto text-center relative">
           <RevealSection>
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-background mb-6">
-              Interested in Our <span className="italic text-primary">Bloodlines?</span>
+              Interested in Meeting Our <span className="italic text-primary">Hounds?</span>
             </h2>
             <p className="text-background/70 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-              Contact us to learn more about our hounds, breeding program, or to schedule a visit to Bird Kennel.
+              Contact us to learn more about our hounds or to schedule a visit to Bird Kennel.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-primary hover:bg-primary/90 rounded-full px-8 group">
-                <Link href="/litters" data-cursor-hover>
-                  View Registered Litters
+                <Link href="/available" data-cursor-hover>
+                  View Available Hounds
                   <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </Link>
               </Button>

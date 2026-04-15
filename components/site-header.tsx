@@ -9,7 +9,6 @@ import Image from "@/node_modules/next/image"
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Our Foxhounds", href: "/foxhounds" },
-  { name: "Registered Litters", href: "/litters" },
   { name: "Friends of the Foxhound", href: "/friends" },
   { name: "Available Hounds", href: "/available" },
   { name: "Adopted Hounds", href: "/adopted" },

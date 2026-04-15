@@ -10,7 +10,6 @@ const navigation = {
   main: [
     { name: "Home", href: "/" },
     { name: "Our Foxhounds", href: "/foxhounds" },
-    { name: "Registered Litters", href: "/litters" },
     { name: "Friends of the Foxhound", href: "/friends" },
   ],
   adoption: [

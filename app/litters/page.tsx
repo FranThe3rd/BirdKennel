@@ -25,18 +25,18 @@ function RevealSection({ children, className = "" }: { children: React.ReactNode
   )
 }
 
-const breedingInfo = [
+const rescueInfo = [
   {
-    title: "S.F.S.B. Registered",
-    description: "All our litters are registered with the Standard Foxhound Stud Book, ensuring documented lineage and breed standards."
+    title: "Rescue Focused",
+    description: "Our work centers on helping foxhounds in need through foster care, medical support, and placement."
   },
   {
-    title: "Health Focused",
-    description: "We prioritize the health and well-being of our hounds, ensuring puppies come from healthy, proven parents."
+    title: "Health First",
+    description: "Every hound in our care receives attention focused on health, stability, and long-term wellbeing."
   },
   {
-    title: "Hunting Heritage",
-    description: "Our bloodlines are selected for hunting ability, temperament, and the preservation of the American Foxhound tradition."
+    title: "Adoption Support",
+    description: "We support adopters with guidance and resources to help each hound transition into a loving home."
   }
 ]
 
@@ -58,7 +58,7 @@ export default function LittersPage() {
             className="inline-flex items-center gap-2 text-primary font-medium text-sm tracking-[0.2em] uppercase mb-6"
           >
             <Sparkles className="w-4 h-4" />
-            S.F.S.B. Registered K-978
+            #FriendsoftheFoxhound
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -66,7 +66,7 @@ export default function LittersPage() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-background mb-6"
           >
-            Registered <span className="italic text-primary">Litters</span>
+            Rescue <span className="italic text-primary">Updates</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -74,12 +74,12 @@ export default function LittersPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-background/70 text-lg max-w-2xl mx-auto leading-relaxed"
           >
-            Stay updated on our breeding program and upcoming litters of registered American Foxhound puppies.
+            Stay updated on our rescue work, upcoming events, and adoption opportunities.
           </motion.p>
         </div>
       </section>
 
-      {/* No Litters Message */}
+      {/* Updates Message */}
       <section className="py-32 px-6 bg-background">
         <div className="max-w-2xl mx-auto text-center">
           <RevealSection>
@@ -90,10 +90,10 @@ export default function LittersPage() {
               <Bell className="w-12 h-12 text-primary" />
             </motion.div>
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
-              No Registered <span className="italic text-primary">Litters</span>
+              No New <span className="italic text-primary">Updates</span>
             </h2>
             <p className="text-muted-foreground text-lg mb-12 leading-relaxed">
-              We have not bred our hounds yet, but we will soon! Subscribe to our page to be notified when we have our first litter of registered American Foxhound puppies.
+              We do not breed dogs. This page is reserved for rescue and adoption updates, and we will post news here as it becomes available.
             </p>
             
             
@@ -119,18 +119,18 @@ export default function LittersPage() {
         <div className="max-w-5xl mx-auto">
           <RevealSection className="text-center mb-16">
             <span className="inline-block text-primary font-medium text-sm tracking-[0.2em] uppercase mb-4">
-              Quality Breeding
+              Our Mission
             </span>
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
-              About Our <span className="italic text-primary">Program</span>
+              About Our <span className="italic text-primary">Rescue Work</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Quality over quantity is our approach to breeding American Foxhounds.
+              We are committed to foster care, responsible placement, and lifelong support for foxhounds.
             </p>
           </RevealSection>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {breedingInfo.map((item, index) => (
+            {rescueInfo.map((item, index) => (
               <RevealSection key={item.title}>
                 <motion.div
                   whileHover={{ y: -8 }}
