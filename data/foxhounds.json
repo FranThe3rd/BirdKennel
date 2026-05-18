@@ -1,8 +1,19 @@
 [
   {
+    "id": "new-foxhoun",
+    "name": "Tater Tot",
+    "image": "/images/foxhounds/hound-tater-tot-1779068513060.jpg",
+    "sfsbNumber": null,
+    "sex": "Male",
+    "whelped": "January 30, 2025",
+    "litterNumber": null,
+    "sire": "Unknown",
+    "gyp": "Unknown"
+  },
+  {
     "id": "winn-dixie",
     "name": "Winn-Dixie",
-    "image": "/images/foxhounds/hound-winn-dixie.jpg",
+    "image": "/images/foxhounds/hound-winn-dixie-1779068343703.jpg",
     "sfsbNumber": "290103",
     "sex": "Female",
     "whelped": "July 10, 2023",
@@ -13,7 +24,7 @@
   {
     "id": "goose",
     "name": "Goose",
-    "image": "/images/foxhounds/hound-goose.jpg",
+    "image": "/images/foxhounds/hound-goose-1779068357419.jpg",
     "sfsbNumber": "290101",
     "sex": "Male",
     "whelped": "July 10, 2023",
@@ -24,7 +35,7 @@
   {
     "id": "penny",
     "name": "Penny",
-    "image": "/images/foxhounds/hound-penny.jpg",
+    "image": "/images/foxhounds/hound-penny-1779068365382.jpg",
     "sfsbNumber": "290102",
     "sex": "Female",
     "whelped": "July 10, 2023",
@@ -35,7 +46,7 @@
   {
     "id": "rocket",
     "name": "Rocket",
-    "image": "/images/foxhounds/hound-rocket.jpg",
+    "image": "/images/foxhounds/hound-rocket-1779068373535.jpg",
     "sfsbNumber": "292003",
     "sex": "Male",
     "whelped": "July 4, 2022",
@@ -46,7 +57,7 @@
   {
     "id": "dynomite",
     "name": "Dynomite",
-    "image": "/images/foxhounds/hound-dynomite.jpg",
+    "image": "/images/foxhounds/hound-dynomite-1779068382785.jpg",
     "sfsbNumber": "293792",
     "sex": "Male",
     "whelped": "March 30, 2022",
@@ -57,7 +68,7 @@
   {
     "id": "crystal",
     "name": "Crystal",
-    "image": "/images/foxhounds/hound-crystal.jpg",
+    "image": "/images/foxhounds/hound-crystal-1779068391568.jpg",
     "sfsbNumber": "293791",
     "sex": "Female",
     "whelped": "March 30, 2022",
@@ -68,10 +79,10 @@
   {
     "id": "biscuit",
     "name": "Biscuit",
-    "image": "/images/foxhounds/hound-biscuit.jpg",
+    "image": "/images/foxhounds/hound-biscuit-1779068400817.jpg",
     "sfsbNumber": null,
-    "sex": "Unknown",
-    "whelped": "Unknown",
+    "sex": "Male",
+    "whelped": "November 24,  2023",
     "litterNumber": null,
     "sire": "Unknown",
     "gyp": "Unknown"
