@@ -1,0 +1,57 @@
+[
+  {
+    "id": "buddy",
+    "name": "Buddy",
+    "images": [],
+    "adoptedDate": "April 4, 2026",
+    "description": "Buddy found his forever home and is settling in with his new family."
+  },
+  {
+    "id": "donny",
+    "name": "Donny",
+    "images": [
+      "/images/adopted/hound-donny.JPG"
+    ],
+    "adoptedDate": "April 4, 2026",
+    "description": "Donny is loved in his new home and enjoys plenty of walks and couch time."
+  },
+  {
+    "id": "randy",
+    "name": "Randy",
+    "images": [
+      "/images/adopted/hound-randy.JPG"
+    ],
+    "adoptedDate": "April 4, 2026",
+    "description": "Randy was a wonderful hound to place and is thriving with his adopters."
+  },
+  {
+    "id": "monica-rachel",
+    "name": "Monica & Rachel",
+    "images": [
+      "/images/available/hound-monica-rachel.jpg",
+      "/images/available/hound-monica-rachel2.jpg"
+    ],
+    "adoptedDate": "March 27, 2026",
+    "description": "Monica and Rachel came from Hertford County NC. They were adopted together."
+  },
+  {
+    "id": "bo",
+    "name": "Bo",
+    "images": [
+      "/images/available/hound-bo.jpg",
+      "/images/available/hound-bo2.jpg"
+    ],
+    "adoptedDate": "March 27, 2026",
+    "description": "Bo is a well mannered hound who loves to be outside, going on walks, and playing with friends."
+  },
+  {
+    "id": "tutter",
+    "name": "Tutter",
+    "images": [
+      "/images/adopted/hound-tutter.jpg",
+      "/images/adopted/hound-tutter2.jpg"
+    ],
+    "adoptedDate": "January 10, 2026",
+    "description": "Tutter was an awesome hound to foster and got along well with everyone. He loved to eat, go for walks, and bark up trees at squirrels."
+  }
+]

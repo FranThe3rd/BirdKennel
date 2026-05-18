@@ -7,6 +7,7 @@ import { Heart, Sparkles, X, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
+import type { AvailableHound } from "@/types/hounds"
 
 function RevealSection({ children, className = "" }: { children: React.ReactNode, className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -25,50 +26,8 @@ function RevealSection({ children, className = "" }: { children: React.ReactNode
   )
 }
 
-const availableHounds = [
-
-  {
-    name: "Currently No Available Dogs",
-    images: [
-      
-    ],
-    origin: "",
-    description:
-      ""
-  },
-
-]
-
-  /** 
-const availableHounds = [
-
-  {
-    name: "Bo",
-    images: [
-      "/images/available/hound-bo.jpg",
-      "/images/available/hound-bo2.jpg"
-    ],
-    origin: "Hertford County, NC",
-    description:
-      "Bo is a well mannered hound who loves to be outside, going on walks, and playing with friends."
-  },
-  {
-    name: "Rachel & Monica",
-    images: [
-      "/images/available/hound-monica-rachel.jpg",
-      "/images/available/hound-monica-rachel2.jpg"
-    ],
-    origin: "Hertford County, NC",
-    description:
-      "Monica and Rachel came from Hertford County NC. They must be adopted together."
-  },
-  
-
-]
-*/
-
-function normalizeAvailableIndexes(prev: number[]): number[] {
-  return availableHounds.map((hound, i) => {
+function normalizeAvailableIndexes(prev: number[], hounds: AvailableHound[]): number[] {
+  return hounds.map((hound, i) => {
     const len = hound.images.length
     if (!len) return 0
     const raw = prev[i]
@@ -78,6 +37,9 @@ function normalizeAvailableIndexes(prev: number[]): number[] {
 }
 
 export default function AvailablePage() {
+  const [availableHounds, setAvailableHounds] = useState<AvailableHound[]>([])
+  const [loadingHounds, setLoadingHounds] = useState(true)
+
   const heroRef = useRef<HTMLDivElement>(null)
 
   const { scrollYProgress } = useScroll({
@@ -91,17 +53,32 @@ export default function AvailablePage() {
   const [selectedDog, setSelectedDog] = useState<number | null>(null)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
 
-  const [indexes, setIndexes] = useState(availableHounds.map(() => 0))
+  const [indexes, setIndexes] = useState<number[]>([])
   const [hovered, setHovered] = useState<number | null>(null)
 
   useEffect(() => {
-    setIndexes(prev => normalizeAvailableIndexes(prev))
+    fetch("/api/hounds/available")
+      .then((res) => res.json())
+      .then((data) => {
+        const hounds: AvailableHound[] = data.hounds ?? []
+        setAvailableHounds(hounds)
+        setIndexes(hounds.map(() => 0))
+      })
+      .catch(() => setAvailableHounds([]))
+      .finally(() => setLoadingHounds(false))
   }, [])
 
   useEffect(() => {
+    if (!availableHounds.length) return
+    setIndexes((prev) => normalizeAvailableIndexes(prev, availableHounds))
+  }, [availableHounds])
+
+  useEffect(() => {
+    if (!availableHounds.length) return
+
     const interval = setInterval(() => {
       setIndexes(prev => {
-        const base = normalizeAvailableIndexes(prev)
+        const base = normalizeAvailableIndexes(prev, availableHounds)
         return base.map((index, i) => {
           if (hovered === i) return index
           const len = availableHounds[i].images.length
@@ -112,13 +89,13 @@ export default function AvailablePage() {
     }, 3500)
 
     return () => clearInterval(interval)
-  }, [hovered])
+  }, [hovered, availableHounds])
 
   function nextImage(i: number) {
     setIndexes(prev => {
       const len = availableHounds[i].images.length
       if (!len) return prev
-      const copy = normalizeAvailableIndexes(prev)
+      const copy = normalizeAvailableIndexes(prev, availableHounds)
       copy[i] = (copy[i] + 1) % len
       return copy
     })
@@ -128,7 +105,7 @@ export default function AvailablePage() {
     setIndexes(prev => {
       const len = availableHounds[i].images.length
       if (!len) return prev
-      const copy = normalizeAvailableIndexes(prev)
+      const copy = normalizeAvailableIndexes(prev, availableHounds)
       copy[i] = (copy[i] - 1 + len) % len
       return copy
     })
@@ -244,6 +221,10 @@ export default function AvailablePage() {
       <section className="py-24 px-6 bg-background">
         <div className="max-w-7xl mx-auto space-y-12">
 
+          {loadingHounds ? (
+            <p className="text-center text-muted-foreground py-12">Loading available hounds...</p>
+          ) : null}
+
           {availableHounds.map((hound, i) => {
             const len = hound.images.length
             const raw = indexes[i]
@@ -255,7 +236,7 @@ export default function AvailablePage() {
               len > 0 ? hound.images[slideIdx] ?? null : null
 
             return (
-              <RevealSection key={hound.name}>
+              <RevealSection key={hound.id}>
                 <motion.div
                   className="bg-card rounded-3xl overflow-hidden shadow-xl border border-border"
                   whileHover={{ y: -4 }}

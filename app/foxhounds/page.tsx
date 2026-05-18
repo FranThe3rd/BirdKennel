@@ -3,11 +3,12 @@
 import Image from "next/image"
 import Link from "next/link"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useEffect, useState } from "react"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
+import type { Foxhound } from "@/types/hounds"
 
 function RevealSection({ children, className = "" }: { children: React.ReactNode, className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -26,53 +27,19 @@ function RevealSection({ children, className = "" }: { children: React.ReactNode
   )
 }
 
-const foxhounds = [
-  {
-    name: "Winn-Dixie",
-    image: "/images/foxhounds/hound-winn-dixie.jpg",
-    sfsbNumber: "290103",
-    sex: "Female"
-  },
-  {
-    name: "Goose",
-    image: "/images/foxhounds/hound-goose.jpg",
-    sfsbNumber: "290101",
-    sex: "Male"
-  },
-  {
-    name: "Penny",
-    image: "/images/foxhounds/hound-penny.jpg",
-    sfsbNumber: "290102",
-    sex: "Female"
-  },
-  {
-    name: "Rocket",
-    image: "/images/foxhounds/hound-rocket.jpg",
-    sfsbNumber: "292003",
-    sex: "Male"
-  },
-  {
-    name: "Dynomite",
-    image: "/images/foxhounds/hound-dynomite.jpg",
-    sfsbNumber: "293792",
-    sex: "Male"
-  },
-  {
-    name: "Crystal",
-    image: "/images/foxhounds/hound-crystal.jpg",
-    sfsbNumber: "293791",
-    sex: "Female"
-  },
-  {
-    name: "Biscuit",
-    image: "/images/foxhounds/hound-biscuit.jpg",
-    sfsbNumber: null,
-    sex: "Unknown"
-  }
-]
-
 export default function FoxhoundsPage() {
+  const [foxhounds, setFoxhounds] = useState<Foxhound[]>([])
+  const [loadingHounds, setLoadingHounds] = useState(true)
+
   const heroRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    fetch("/api/hounds/foxhounds")
+      .then((res) => res.json())
+      .then((data) => setFoxhounds(data.hounds ?? []))
+      .catch(() => setFoxhounds([]))
+      .finally(() => setLoadingHounds(false))
+  }, [])
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
@@ -127,7 +94,7 @@ export default function FoxhoundsPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-white/80 text-lg max-w-2xl leading-relaxed"
           >
-            Meet the foxhounds in our care and learn more about each dog.
+            Many of our hounds are registered with the Standard Foxhound Stud Book, with documented pedigree details on file.
           </motion.p>
         </motion.div>
       </section>
@@ -135,22 +102,31 @@ export default function FoxhoundsPage() {
       {/* Foxhounds Grid */}
       <section className="py-24 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
+          {loadingHounds ? (
+            <p className="text-center text-muted-foreground py-12">Loading foxhounds...</p>
+          ) : null}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {foxhounds.map((hound, index) => (
-              <RevealSection key={hound.name}>
+            {foxhounds.map((hound) => (
+              <RevealSection key={hound.id}>
                 <motion.div
                   whileHover={{ y: -8 }}
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   className="bg-card rounded-2xl overflow-hidden shadow-lg border border-border group"
                   data-cursor-hover
                 >
-                  <div className="relative aspect-square overflow-hidden">
-                    <Image
-                      src={hound.image}
-                      alt={hound.name}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                  <div className="relative aspect-square overflow-hidden bg-muted">
+                    {hound.image ? (
+                      <Image
+                        src={hound.image}
+                        alt={hound.name}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm">
+                        Photo coming soon
+                      </div>
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     {hound.sfsbNumber && (
                       <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-1.5 rounded-full text-sm font-medium shadow-lg">
@@ -172,9 +148,30 @@ export default function FoxhoundsPage() {
                       </span>
                     </div>
                     
-                    <p className="text-muted-foreground text-sm italic">
-                      Contact us for more details about this hound.
-                    </p>
+                    {hound.sfsbNumber ? (
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between py-2 border-b border-border">
+                          <span className="text-muted-foreground">Whelped</span>
+                          <span className="text-foreground font-medium">{hound.whelped}</span>
+                        </div>
+                        <div className="flex justify-between py-2 border-b border-border">
+                          <span className="text-muted-foreground">Litter #</span>
+                          <span className="text-foreground font-medium">{hound.litterNumber}</span>
+                        </div>
+                        <div className="pt-3 space-y-2">
+                          <p className="text-muted-foreground text-xs">
+                            <span className="font-semibold text-foreground">Sire:</span> {hound.sire}
+                          </p>
+                          <p className="text-muted-foreground text-xs">
+                            <span className="font-semibold text-foreground">Gyp:</span> {hound.gyp}
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-muted-foreground text-sm italic">
+                        Not registered with S.F.S.B.
+                      </p>
+                    )}
                   </div>
                 </motion.div>
               </RevealSection>

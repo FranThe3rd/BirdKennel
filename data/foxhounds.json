@@ -1,0 +1,79 @@
+[
+  {
+    "id": "winn-dixie",
+    "name": "Winn-Dixie",
+    "image": "/images/foxhounds/hound-winn-dixie.jpg",
+    "sfsbNumber": "290103",
+    "sex": "Female",
+    "whelped": "July 10, 2023",
+    "litterNumber": "L133505",
+    "sire": "Big House Randy (271902)",
+    "gyp": "Night Moves Michaela (258868)"
+  },
+  {
+    "id": "goose",
+    "name": "Goose",
+    "image": "/images/foxhounds/hound-goose.jpg",
+    "sfsbNumber": "290101",
+    "sex": "Male",
+    "whelped": "July 10, 2023",
+    "litterNumber": "L133505",
+    "sire": "Big House Randy (271902)",
+    "gyp": "Night Moves Michaela (258868)"
+  },
+  {
+    "id": "penny",
+    "name": "Penny",
+    "image": "/images/foxhounds/hound-penny.jpg",
+    "sfsbNumber": "290102",
+    "sex": "Female",
+    "whelped": "July 10, 2023",
+    "litterNumber": "L133505",
+    "sire": "Big House Randy (271902)",
+    "gyp": "Night Moves Michaela (258868)"
+  },
+  {
+    "id": "rocket",
+    "name": "Rocket",
+    "image": "/images/foxhounds/hound-rocket.jpg",
+    "sfsbNumber": "292003",
+    "sex": "Male",
+    "whelped": "July 4, 2022",
+    "litterNumber": "L129332",
+    "sire": "Fast Lane's Nitro (251109)",
+    "gyp": "Fast Lane's Amber (282878)"
+  },
+  {
+    "id": "dynomite",
+    "name": "Dynomite",
+    "image": "/images/foxhounds/hound-dynomite.jpg",
+    "sfsbNumber": "293792",
+    "sex": "Male",
+    "whelped": "March 30, 2022",
+    "litterNumber": "L123296",
+    "sire": "Elmore's Toby (248873)",
+    "gyp": "Nordstrom's T&T Pearl (271973)"
+  },
+  {
+    "id": "crystal",
+    "name": "Crystal",
+    "image": "/images/foxhounds/hound-crystal.jpg",
+    "sfsbNumber": "293791",
+    "sex": "Female",
+    "whelped": "March 30, 2022",
+    "litterNumber": "L123296",
+    "sire": "Elmore's Toby (248873)",
+    "gyp": "Nordstrom's T&T Pearl (271973)"
+  },
+  {
+    "id": "biscuit",
+    "name": "Biscuit",
+    "image": "/images/foxhounds/hound-biscuit.jpg",
+    "sfsbNumber": null,
+    "sex": "Unknown",
+    "whelped": "Unknown",
+    "litterNumber": null,
+    "sire": "Unknown",
+    "gyp": "Unknown"
+  }
+]

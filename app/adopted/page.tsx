@@ -9,6 +9,7 @@ import { Heart, Calendar, ArrowUpRight, Sparkles, X, ChevronLeft, ChevronRight }
 import { Button } from "@/components/ui/button"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
+import type { AdoptedHound } from "@/types/hounds"
 
 function RevealSection({ children, className = "" }: { children: React.ReactNode, className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -28,63 +29,9 @@ function RevealSection({ children, className = "" }: { children: React.ReactNode
 }
 
 
-const adoptedHounds = [
-  {
-    name: "Buddy",
-    images: ["/images/adopted/hound-buddy.JPG"],
-    adoptedDate: "April 4, 2026",
-    description:
-      "Buddy found his forever home and is settling in with his new family."
-  },
-  {
-    name: "Donny",
-    images: ["/images/adopted/hound-donny.JPG"],
-    adoptedDate: "April 4, 2026",
-    description:
-      "Donny is loved in his new home and enjoys plenty of walks and couch time."
-  },
-  {
-    name: "Randy",
-    images: ["/images/adopted/hound-randy.JPG"],
-    adoptedDate: "April 4, 2026",
-    description:
-      "Randy was a wonderful hound to place and is thriving with his adopters."
-  },
-  {
-    name: "Monica & Rachel",
-    images: [
-      "/images/available/hound-monica-rachel.jpg",
-      "/images/available/hound-monica-rachel2.jpg"
-    ],
-    adoptedDate: "March 27, 2026",
-    description:
-      "Monica and Rachel came from Hertford County NC. They were adopted together."
-  },
-  {
-    name: "Bo",
-    images: [
-      "/images/available/hound-bo.jpg",
-      "/images/available/hound-bo2.jpg"
-    ],
-    adoptedDate: "March 27, 2026",
-    description:
-      "Bo is a well mannered hound who loves to be outside, going on walks, and playing with friends."
-  },
-  {
-    name: "Tutter",
-    images: [
-      "/images/adopted/hound-tutter.jpg",
-      "/images/adopted/hound-tutter2.jpg"
-    ],
-    adoptedDate: "January 10, 2026",
-    description:
-      "Tutter was an awesome hound to foster and got along well with everyone. He loved to eat, go for walks, and bark up trees at squirrels."
-  }
-];
-
-/** Keeps slide indexes aligned with adoptedHounds (fixes Fast Refresh / stale state). */
-function normalizeAdoptedIndexes(prev: number[]): number[] {
-  return adoptedHounds.map((hound, i) => {
+/** Keeps slide indexes aligned with hounds list (fixes Fast Refresh / stale state). */
+function normalizeAdoptedIndexes(prev: number[], hounds: AdoptedHound[]): number[] {
+  return hounds.map((hound, i) => {
     const len = hound.images.length
     if (!len) return 0
     const raw = prev[i]
@@ -103,6 +50,8 @@ const stats = [
 
 
 export default function AdoptedPage() {
+  const [adoptedHounds, setAdoptedHounds] = useState<AdoptedHound[]>([])
+  const [loadingHounds, setLoadingHounds] = useState(true)
 
   const heroRef = useRef<HTMLDivElement>(null)
 
@@ -115,24 +64,37 @@ export default function AdoptedPage() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
 
 
-  const [indexes, setIndexes] = useState(adoptedHounds.map(() => 0))
+  const [indexes, setIndexes] = useState<number[]>([])
   const [paused, setPaused] = useState(false)
 
   const [selectedDog, setSelectedDog] = useState<number | null>(null)
   const [modalIndex, setModalIndex] = useState(0)
 
   useEffect(() => {
-    setIndexes(prev => normalizeAdoptedIndexes(prev))
+    fetch("/api/hounds/adopted")
+      .then((res) => res.json())
+      .then((data) => {
+        const hounds: AdoptedHound[] = data.hounds ?? []
+        setAdoptedHounds(hounds)
+        setIndexes(hounds.map(() => 0))
+      })
+      .catch(() => setAdoptedHounds([]))
+      .finally(() => setLoadingHounds(false))
   }, [])
 
   useEffect(() => {
+    if (!adoptedHounds.length) return
+    setIndexes((prev) => normalizeAdoptedIndexes(prev, adoptedHounds))
+  }, [adoptedHounds])
 
-    if (paused) return
+  useEffect(() => {
+
+    if (paused || !adoptedHounds.length) return
 
     const interval = setInterval(() => {
 
       setIndexes(prev => {
-        const base = normalizeAdoptedIndexes(prev)
+        const base = normalizeAdoptedIndexes(prev, adoptedHounds)
         return base.map((index, i) =>
           (index + 1) % adoptedHounds[i].images.length
         )
@@ -142,12 +104,12 @@ export default function AdoptedPage() {
 
     return () => clearInterval(interval)
 
-  }, [paused])
+  }, [paused, adoptedHounds])
 
 
   const nextImage = (i: number) => {
     setIndexes(prev => {
-      const copy = normalizeAdoptedIndexes(prev)
+      const copy = normalizeAdoptedIndexes(prev, adoptedHounds)
       copy[i] = (copy[i] + 1) % adoptedHounds[i].images.length
       return copy
     })
@@ -155,7 +117,7 @@ export default function AdoptedPage() {
 
   const prevImage = (i: number) => {
     setIndexes(prev => {
-      const copy = normalizeAdoptedIndexes(prev)
+      const copy = normalizeAdoptedIndexes(prev, adoptedHounds)
       copy[i] =
         (copy[i] - 1 + adoptedHounds[i].images.length) %
         adoptedHounds[i].images.length
@@ -281,6 +243,14 @@ export default function AdoptedPage() {
 
         <div className="max-w-5xl mx-auto flex flex-col gap-[10px]">
 
+          {loadingHounds ? (
+            <p className="text-center text-muted-foreground py-12">Loading success stories...</p>
+          ) : null}
+
+          {!loadingHounds && adoptedHounds.length === 0 ? (
+            <p className="text-center text-muted-foreground py-12">No adopted hounds listed yet.</p>
+          ) : null}
+
           {adoptedHounds.map((hound, i) => {
 
             const len = hound.images.length
@@ -293,7 +263,7 @@ export default function AdoptedPage() {
 
             return (
 
-              <RevealSection key={hound.name}>
+              <RevealSection key={hound.id}>
 
                 <motion.div
                   whileHover={{ y: -4 }}
