@@ -2,7 +2,9 @@
   {
     "id": "buddy",
     "name": "Buddy",
-    "images": [],
+    "images": [
+      "/images/adopted/hound-buddy-1779067815653.jpg"
+    ],
     "adoptedDate": "April 4, 2026",
     "description": "Buddy found his forever home and is settling in with his new family."
   },
