@@ -1,5 +1,16 @@
 [
   {
+    "id": "new-foxhoundt",
+    "name": "test",
+    "image": "/images/foxhounds/hound-test-1779069806963.jpg",
+    "sfsbNumber": null,
+    "sex": "Unknown",
+    "whelped": "Unknown",
+    "litterNumber": null,
+    "sire": "Unknown",
+    "gyp": "Unknown"
+  },
+  {
     "id": "new-foxhoun",
     "name": "Tater Tot",
     "image": "/images/foxhounds/hound-tater-tot-1779068513060.jpg",
