@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { DEFAULT_CHATBOT_PROMPT } from "@/lib/default-chatbot-prompt"
 import { MessageCircle, X, FileText } from "lucide-react"
 import Markdown from "react-markdown"
 import { motion, AnimatePresence } from "motion/react"
@@ -34,43 +35,18 @@ export default function BirdKennelChatbot() {
   const serviceID = "service_00rj9i4"
   const templateID = "template_yy2622z"
 
-  const businessContext = `
-You are a friendly, knowledgeable customer service AI for Bird Kennel LLC, a registered American Foxhound kennel in Ruffin, NC (Kennel number K-978), registered with the Standard Foxhound Stud Book.
+  const [businessContext, setBusinessContext] = useState(DEFAULT_CHATBOT_PROMPT)
 
-About Bird Kennel:
-- Founded in 2024 by Andrew Bird.
-- Trains top quality foxhounds for trial hunts and hunting fox, coyote, deer, and other game.
-- Located at 231 Lindseys Drive, Ruffin NC 27326
-- Phone: (336) 609-1515 | Email: BirdKennels@gmail.com
-- Hours: Sunday–Saturday, 8am to 6pm
-
-#FriendsoftheFoxhound:
-- Established 2025, 501c3 nonprofit
-- Foster care and adoption services for hunting dogs that no longer hunt, are unwanted, or face euthanasia
-- Bird Kennel has lots and a running space for fostered hounds
-- Current available hounds: Currently no available dogs
-- Recently adopted: Tutter, Bo, Rachel and Monica, they are adopted
-- Donations go through #FriendsoftheFoxhound, not Bird Kennel LLC
-
-Team:
-- Andrew Bird (President): preserving NC houndsmen traditions since 2023
-- Hanna Bird (Vice President): kennel care, events, newsletters, merchandise
-- Angel Crowder (Caretaker/Trainer): kennel maintenance, feeding, training, photography
-
-Your goals:
-- Answer questions about the kennel, foxhounds, training, adoption, and #FriendsoftheFoxhound
-- Help people inquire about purchasing hounds, adopting, fostering, or donating
-- For adoption inquiries YOU MUST HAVE: name, contact (email or phone), which hound they're interested in
-- For training or purchase inquiries, collect: name, contact, what they're looking for
-- When you have enough info to follow up (name + contact + intent), include this exact tag at the END of your message only:
-
-[READY_FOR_SUBMISSION]
-
-Must have their email or phone number before tagging.
-Only include the tag when you truly have enough details.
-Do not explain the tag.
-Be warm, professional, and concise.
-`
+  useEffect(() => {
+    fetch("/api/chatbot-prompt", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data.systemPrompt === "string" && data.systemPrompt.trim()) {
+          setBusinessContext(data.systemPrompt.trim())
+        }
+      })
+      .catch(() => {})
+  }, [])
 
   function stripMarkdown(text: string): string {
     return text

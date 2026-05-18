@@ -12,6 +12,11 @@ import {
   LogOut,
   ExternalLink,
   Loader2,
+  GripVertical,
+  ChevronUp,
+  ChevronDown,
+  MessageSquare,
+  RotateCcw,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -26,7 +31,18 @@ import type {
 } from "@/types/hounds"
 import { slugifyName } from "@/lib/slug"
 
-type TabType = HoundCollection
+type TabType = HoundCollection | "chatbot"
+
+function reorderItems<T>(items: T[], fromIndex: number, toIndex: number): T[] {
+  if (fromIndex === toIndex) return items
+  if (fromIndex < 0 || toIndex < 0 || fromIndex >= items.length || toIndex >= items.length) {
+    return items
+  }
+  const next = [...items]
+  const [moved] = next.splice(fromIndex, 1)
+  next.splice(toIndex, 0, moved)
+  return next
+}
 
 export function AdminDashboard() {
   const router = useRouter()
@@ -38,18 +54,24 @@ export function AdminDashboard() {
   const [saving, setSaving] = useState(false)
   const [uploadingId, setUploadingId] = useState<string | null>(null)
   const [message, setMessage] = useState("")
+  const [chatbotPrompt, setChatbotPrompt] = useState("")
+  const [defaultChatbotPrompt, setDefaultChatbotPrompt] = useState("")
+  const [savingPrompt, setSavingPrompt] = useState(false)
 
   const loadAll = useCallback(async () => {
     setLoading(true)
     try {
-      const [a, b, f] = await Promise.all([
+      const [a, b, f, chat] = await Promise.all([
         fetch("/api/admin/hounds?type=adopted").then((r) => r.json()),
         fetch("/api/admin/hounds?type=available").then((r) => r.json()),
         fetch("/api/admin/hounds?type=foxhounds").then((r) => r.json()),
+        fetch("/api/admin/chatbot-prompt").then((r) => r.json()),
       ])
       setAdopted(a.hounds || [])
       setAvailable(b.hounds || [])
       setFoxhounds(f.hounds || [])
+      setChatbotPrompt(chat.systemPrompt || "")
+      setDefaultChatbotPrompt(chat.defaultPrompt || "")
     } catch {
       setMessage("Failed to load data.")
     } finally {
@@ -61,7 +83,23 @@ export function AdminDashboard() {
     loadAll()
   }, [loadAll])
 
-  async function saveCollection(type: TabType) {
+  async function saveChatbotPrompt() {
+    setSavingPrompt(true)
+    setMessage("")
+    const res = await fetch("/api/admin/chatbot-prompt", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ systemPrompt: chatbotPrompt }),
+    })
+    setSavingPrompt(false)
+    if (!res.ok) {
+      setMessage("Failed to save chatbot prompt.")
+      return
+    }
+    setMessage("Chatbot prompt saved. New visitors will use the updated instructions.")
+  }
+
+  async function saveCollection(type: HoundCollection) {
     setSaving(true)
     setMessage("")
     const hounds =
@@ -241,11 +279,16 @@ export function AdminDashboard() {
       ) : null}
 
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as TabType)}>
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
           <TabsTrigger value="adopted">Adopted</TabsTrigger>
           <TabsTrigger value="available">Available</TabsTrigger>
           <TabsTrigger value="foxhounds">Our Foxhounds</TabsTrigger>
+          <TabsTrigger value="chatbot">AI Chatbot</TabsTrigger>
         </TabsList>
+
+        <p className="text-xs text-muted-foreground mt-3">
+          Drag cards by the grip handle or use the arrows to change display order on the public site.
+        </p>
 
         <TabsContent value="adopted" className="space-y-4 mt-6">
           <div className="flex flex-wrap gap-2">
@@ -259,10 +302,15 @@ export function AdminDashboard() {
             </Button>
           </div>
 
-          {adopted.map((hound) => (
+          {adopted.map((hound, index) => (
             <HoundCard
               key={hound.id}
+              index={index}
+              total={adopted.length}
               title={hound.name}
+              onReorder={(from, to) =>
+                setAdopted((prev) => reorderItems(prev, from, to))
+              }
               onDelete={() =>
                 setAdopted((prev) => prev.filter((h) => h.id !== hound.id))
               }
@@ -345,10 +393,15 @@ export function AdminDashboard() {
             </Button>
           </div>
 
-          {available.map((hound) => (
+          {available.map((hound, index) => (
             <HoundCard
               key={hound.id}
+              index={index}
+              total={available.length}
               title={hound.name}
+              onReorder={(from, to) =>
+                setAvailable((prev) => reorderItems(prev, from, to))
+              }
               onDelete={() =>
                 setAvailable((prev) => prev.filter((h) => h.id !== hound.id))
               }
@@ -437,10 +490,15 @@ export function AdminDashboard() {
             </Button>
           </div>
 
-          {foxhounds.map((hound) => (
+          {foxhounds.map((hound, index) => (
             <HoundCard
               key={hound.id}
+              index={index}
+              total={foxhounds.length}
               title={hound.name}
+              onReorder={(from, to) =>
+                setFoxhounds((prev) => reorderItems(prev, from, to))
+              }
               onDelete={() =>
                 setFoxhounds((prev) => prev.filter((h) => h.id !== hound.id))
               }
@@ -570,28 +628,129 @@ export function AdminDashboard() {
             </HoundCard>
           ))}
         </TabsContent>
+
+        <TabsContent value="chatbot" className="space-y-4 mt-6">
+          <div className="rounded-xl border border-border bg-card p-6 space-y-4">
+            <div className="flex items-start gap-3">
+              <MessageSquare className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+              <div>
+                <h2 className="font-serif text-xl font-semibold">Chatbot instructions</h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  This text tells the website AI how to answer visitors. Include hours, policies, and what to collect before an inquiry is submitted.
+                </p>
+              </div>
+            </div>
+
+            <Field label="System prompt">
+              <Textarea
+                value={chatbotPrompt}
+                onChange={(e) => setChatbotPrompt(e.target.value)}
+                rows={18}
+                className="font-mono text-sm"
+                placeholder="Enter chatbot instructions..."
+              />
+            </Field>
+
+            <div className="flex flex-wrap gap-2">
+              <Button onClick={saveChatbotPrompt} disabled={savingPrompt}>
+                <Save className="w-4 h-4 mr-2" />
+                {savingPrompt ? "Saving..." : "Save chatbot prompt"}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setChatbotPrompt(defaultChatbotPrompt)}
+                disabled={!defaultChatbotPrompt}
+              >
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Reset to default
+              </Button>
+            </div>
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   )
 }
 
 function HoundCard({
+  index,
+  total,
   title,
   children,
   onDelete,
+  onReorder,
 }: {
+  index: number
+  total: number
   title: string
   children: React.ReactNode
   onDelete: () => void
+  onReorder: (from: number, to: number) => void
 }) {
+  const [dragOver, setDragOver] = useState(false)
+
   return (
-    <article className="bg-card border border-border rounded-2xl p-6 space-y-4 shadow-sm">
+    <article
+      onDragOver={(e) => {
+        e.preventDefault()
+        e.dataTransfer.dropEffect = "move"
+        setDragOver(true)
+      }}
+      onDragLeave={() => setDragOver(false)}
+      onDrop={(e) => {
+        e.preventDefault()
+        setDragOver(false)
+        const from = Number(e.dataTransfer.getData("text/plain"))
+        if (!Number.isNaN(from)) onReorder(from, index)
+      }}
+      className={`bg-card border rounded-2xl p-6 space-y-4 shadow-sm transition-colors ${
+        dragOver ? "border-primary ring-2 ring-primary/20" : "border-border"
+      }`}
+    >
       <div className="flex items-center justify-between gap-3">
-        <h2 className="font-serif text-xl font-semibold">{title}</h2>
-        <Button variant="ghost" size="sm" onClick={onDelete} className="text-destructive">
-          <Trash2 className="w-4 h-4 mr-1" />
-          Remove
-        </Button>
+        <div className="flex items-center gap-2 min-w-0">
+          <button
+            type="button"
+            draggable
+            onDragStart={(e) => {
+              e.dataTransfer.effectAllowed = "move"
+              e.dataTransfer.setData("text/plain", String(index))
+            }}
+            className="cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground p-1 shrink-0"
+            aria-label={`Drag to reorder ${title}`}
+          >
+            <GripVertical className="w-5 h-5" />
+          </button>
+          <span className="text-xs text-muted-foreground shrink-0">#{index + 1}</span>
+          <h2 className="font-serif text-xl font-semibold truncate">{title}</h2>
+        </div>
+        <div className="flex items-center gap-1 shrink-0">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            disabled={index === 0}
+            onClick={() => onReorder(index, index - 1)}
+            aria-label="Move up"
+          >
+            <ChevronUp className="w-4 h-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            disabled={index >= total - 1}
+            onClick={() => onReorder(index, index + 1)}
+            aria-label="Move down"
+          >
+            <ChevronDown className="w-4 h-4" />
+          </Button>
+          <Button variant="ghost" size="sm" onClick={onDelete} className="text-destructive">
+            <Trash2 className="w-4 h-4 mr-1" />
+            Remove
+          </Button>
+        </div>
       </div>
       {children}
     </article>
