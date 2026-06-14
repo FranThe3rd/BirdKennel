@@ -1,5 +1,23 @@
 [
   {
+    "id": "hound-1781396544921",
+    "name": "Scentra",
+    "images": [
+      "/images/adopted/hound-scentra-1781396642912.jpg"
+    ],
+    "adoptedDate": "May 30, 2026",
+    "description": "Scentra found her forever home with a great family. She was the best running hound we had to date, and we are excited to hear how she does in the future!"
+  },
+  {
+    "id": "hound-1781396427213",
+    "name": "San \"Sam\" Frediano",
+    "images": [
+      "/images/adopted/hound-san-sam-frediano-1781396540894.jpg"
+    ],
+    "adoptedDate": "May 1, 2026",
+    "description": "Sam went to his new home in Virginia with a very friendly family with many fellow working hounds. "
+  },
+  {
     "id": "buddy",
     "name": "Buddy",
     "images": [
