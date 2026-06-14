@@ -1,27 +1,5 @@
 [
   {
-    "id": "new-foxhoun",
-    "name": "Tater Tot",
-    "image": "/images/foxhounds/hound-tater-tot-1779068513060.jpg",
-    "sfsbNumber": null,
-    "sex": "Male",
-    "whelped": "January 30, 2025",
-    "litterNumber": null,
-    "sire": "Unknown",
-    "gyp": "Unknown"
-  },
-  {
-    "id": "new-foxhoundt",
-    "name": "test",
-    "image": "/images/foxhounds/hound-test-1779069806963.jpg",
-    "sfsbNumber": null,
-    "sex": "Unknown",
-    "whelped": "Unknown",
-    "litterNumber": null,
-    "sire": "Unknown",
-    "gyp": "Unknown"
-  },
-  {
     "id": "winn-dixie",
     "name": "Winn-Dixie",
     "image": "/images/foxhounds/hound-winn-dixie-1779068343703.jpg",
@@ -94,6 +72,17 @@
     "sfsbNumber": null,
     "sex": "Male",
     "whelped": "November 24,  2023",
+    "litterNumber": null,
+    "sire": "Unknown",
+    "gyp": "Unknown"
+  },
+  {
+    "id": "new-foxhoun",
+    "name": "Tater Tot",
+    "image": "/images/foxhounds/hound-tater-tot-1779068513060.jpg",
+    "sfsbNumber": null,
+    "sex": "Male",
+    "whelped": "January 30, 2025",
     "litterNumber": null,
     "sire": "Unknown",
     "gyp": "Unknown"
